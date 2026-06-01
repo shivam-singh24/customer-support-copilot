@@ -1,0 +1,14 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+.env
+venv/
+.venv/
+
+# Raw dataset can be large/private
+data/raw/
+
+# OS/editor junk
+.DS_Store
+.vscode/

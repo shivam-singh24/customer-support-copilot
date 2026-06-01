@@ -1,0 +1,5 @@
+model,language,accuracy,macro_f1,weighted_f1
+Word TF-IDF + LinearSVC/GridSearchCV,de,0.491722,0.457383,0.488996
+Word TF-IDF + LinearSVC/GridSearchCV,en,0.700182,0.705804,0.700255
+Word + Char TF-IDF + LinearSVC,de,0.502897,0.484206,0.502231
+Word + Char TF-IDF + LinearSVC,en,0.67868,0.685937,0.6783
