@@ -1,0 +1,21 @@
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.
+
+Eligible customers may receive repair, replacement, or service support.
+
+Warranty-related tickets should be assigned to Technical Support or Warranty Support.

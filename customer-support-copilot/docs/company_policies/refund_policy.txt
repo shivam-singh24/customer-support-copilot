@@ -1,0 +1,21 @@
+Refund Policy
+
+Customers can request a refund within 30 days of purchase.
+
+Refunds are allowed when:
+- The product is damaged on arrival.
+- The wrong item was delivered.
+- The product does not match the description.
+- The customer was charged incorrectly.
+- The customer received a defective item.
+
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.

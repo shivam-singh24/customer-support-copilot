@@ -1,6 +1,7 @@
 # Python cache
 __pycache__/
 *.py[cod]
+*.pyo
 .ipynb_checkpoints/
 
 # Virtual environments and secrets
@@ -15,3 +16,15 @@ data/raw/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# Streamlit secrets - for future dashboard phase
+.streamlit/secrets.toml
+
+# Environment-specific files
+.env.local
+.env.*.local

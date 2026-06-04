@@ -1,0 +1,135 @@
+ticket,predicted_type,predicted_queue,predicted_priority,predicted_sentiment,policy_source,generated_reply
+My laptop arrived damaged and I want a refund.,Incident,Technical Support,high,negative,refund_policy.txt,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, this request appears to be related to Incident and should be handled by the Technical Support team.
+
+We understand this may be urgent, so your request should be reviewed with priority.
+
+Relevant policy reference:
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Best regards,
+Customer Support Team"
+My order has not arrived and tracking is not updating.,Problem,Technical Support,medium,negative,shipping_policy.txt,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, this request appears to be related to Problem and should be handled by the Technical Support team.
+
+Your request has been noted and should be handled by the appropriate support team.
+
+Relevant policy reference:
+Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Best regards,
+Customer Support Team"
+My phone battery drains very quickly.,Incident,Customer Service,high,positive,technical_support_policy.txt,"Dear Customer,
+
+Thank you for reaching out to us.
+
+Based on your message, this request appears to be related to Incident and should be handled by the Customer Service team.
+
+We understand this may be urgent, so your request should be reviewed with priority.
+
+Relevant policy reference:
+Technical Support Policy
+
+Technical support handles product issues such as:
+- Battery draining quickly.
+- Device not turning on.
+- Software errors.
+- Connectivity problems.
+- App crashes.
+- Performance issues.
+- Installation failures.
+- Error messages.
+- Slow system behavior.
+
+Support agents should collect:
+- Product name.
+- Issue description.
+- Error messages.
+- Device model.
+- Troubleshooting steps already tried.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Best regards,
+Customer Support Team"
+I cannot login to my account.,Incident,Technical Support,high,negative,account_policy.txt,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, this request appears to be related to Incident and should be handled by the Technical Support team.
+
+We understand this may be urgent, so your request should be reviewed with priority.
+
+Relevant policy reference:
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Best regards,
+Customer Support Team"
+My charger stopped working after 6 months and I need warranty support.,Incident,IT Support,high,negative,warranty_policy.txt,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, this request appears to be related to Incident and should be handled by the IT Support team.
+
+We understand this may be urgent, so your request should be reviewed with priority.
+
+Relevant policy reference:
+Eligible customers may receive repair, replacement, or service support.
+
+Warranty-related tickets should be assigned to Technical Support or Warranty Support.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Best regards,
+Customer Support Team"

@@ -1,0 +1,17 @@
+Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund.
+
+Shipping issues should usually be assigned to the Logistics or Customer Support queue.
+Urgent delivery failures for premium customers may be marked as high priority.

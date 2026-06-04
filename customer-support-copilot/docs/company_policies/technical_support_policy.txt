@@ -1,0 +1,23 @@
+Technical Support Policy
+
+Technical support handles product issues such as:
+- Battery draining quickly.
+- Device not turning on.
+- Software errors.
+- Connectivity problems.
+- App crashes.
+- Performance issues.
+- Installation failures.
+- Error messages.
+- Slow system behavior.
+
+Support agents should collect:
+- Product name.
+- Issue description.
+- Error messages.
+- Device model.
+- Troubleshooting steps already tried.
+
+Critical technical issues should be escalated to the Engineering or Specialist Support queue.
+
+Technical issues affecting product usability may be marked as medium or high priority depending on severity.

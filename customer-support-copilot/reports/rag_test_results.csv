@@ -1,0 +1,120 @@
+ticket,expected_policy,retrieved_policy,is_correct,retrieved_text
+My product arrived damaged and I want a refund.,refund_policy.txt,refund_policy.txt,True,"Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority."
+My order has not arrived and tracking is not updating.,shipping_policy.txt,shipping_policy.txt,True,"Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund."
+My laptop battery drains very quickly.,technical_support_policy.txt,technical_support_policy.txt,True,"Technical Support Policy
+
+Technical support handles product issues such as:
+- Battery draining quickly.
+- Device not turning on.
+- Software errors.
+- Connectivity problems.
+- App crashes.
+- Performance issues.
+- Installation failures.
+- Error messages.
+- Slow system behavior.
+
+Support agents should collect:
+- Product name.
+- Issue description.
+- Error messages.
+- Device model.
+- Troubleshooting steps already tried."
+I cannot login to my account.,account_policy.txt,account_policy.txt,True,"Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification."
+My device stopped working after 6 months.,warranty_policy.txt,technical_support_policy.txt,False,"Technical Support Policy
+
+Technical support handles product issues such as:
+- Battery draining quickly.
+- Device not turning on.
+- Software errors.
+- Connectivity problems.
+- App crashes.
+- Performance issues.
+- Installation failures.
+- Error messages.
+- Slow system behavior.
+
+Support agents should collect:
+- Product name.
+- Issue description.
+- Error messages.
+- Device model.
+- Troubleshooting steps already tried."
+The package says delivered but I did not receive it.,shipping_policy.txt,shipping_policy.txt,True,"Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund."
+I forgot my password and cannot access my account.,account_policy.txt,account_policy.txt,True,"Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification."
+The charger stopped working within warranty period.,warranty_policy.txt,warranty_policy.txt,True,"Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry."

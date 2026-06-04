@@ -1,0 +1,16 @@
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+Account issues should be assigned to Account Support.
+Compromised account reports should be marked as high priority.
