@@ -2,12 +2,20 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
 .ipynb_checkpoints/
 
 # Virtual environments and secrets
 .env
+.env.local
+.env.*.local
+!.env.example
 venv/
 .venv/
+
+# Generated vector indexes
+# Rebuild using the RAG notebook instead of committing binary FAISS artifacts.
+vectorstore/
 
 # Raw datasets can be large/private
 data/raw/
@@ -16,15 +24,32 @@ data/raw/
 .DS_Store
 Thumbs.db
 .vscode/
+.idea/
 
 # Logs and temporary files
 *.log
 tmp/
 temp/
 
+# Jupyter/runtime
+.jupyter/
+*.pid
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build/package artifacts
+build/
+dist/
+*.egg-info/
+
+
 # Streamlit secrets - for future dashboard phase
 .streamlit/secrets.toml
 
-# Environment-specific files
-.env.local
-.env.*.local
+# Local model/cache directories that may become large
+.cache/
+hf_cache/
+huggingface/

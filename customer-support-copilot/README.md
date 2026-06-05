@@ -2,86 +2,70 @@
 
 ## Project Overview
 
-AI Customer Support Copilot is an end-to-end AI/ML and NLP project that automates customer support ticket analysis and response assistance.
+AI Customer Support Copilot is an end-to-end AI/ML and NLP project for customer support ticket analysis and response assistance.
 
-The current system performs:
+The system analyzes a customer ticket, predicts operational metadata, retrieves relevant company policy, and generates a human-reviewable support reply.
 
-* **Ticket Type Prediction**: identifies what kind of issue the ticket represents
-* **Ticket Queue Prediction**: routes the ticket to the right team or department
-* **Ticket Priority Prediction**: estimates how urgent the ticket is
-* **Customer Sentiment Analysis**: detects whether the customer tone is positive, neutral, or negative
-* **RAG Knowledge Retrieval**: retrieves relevant company policy context for a ticket
-* **Support Reply Generation**: generates a human-reviewable customer support response using predictions and retrieved policy context
+```text
+Customer ticket
+      ↓
+ML predictions
+- ticket type
+- support queue
+- priority
+- sentiment
+      ↓
+Multilingual RAG retrieval
+- relevant company policy
+      ↓
+Policy-led reply generation
+- template fallback by default
+- optional LLM mode when API quota is available
+```
 
-The project is being developed as a complete customer support automation system with machine learning classification, retrieval-augmented generation, response assistance, API development, dashboarding, and deployment.
+This project is currently at the **pre-FastAPI stage**. The core ML + RAG + reply-generation pipeline is working. Backend, dashboard, and deployment are the next milestones.
 
 ---
 
 ## Business Problem
 
-Support teams receive many customer tickets across different departments. Manual ticket triage is slow, inconsistent, and prone to routing mistakes.
+Support teams receive large volumes of customer tickets across different departments. Manual triage is slow, inconsistent, and prone to routing mistakes.
 
-This project helps automate early ticket handling by predicting ticket metadata, retrieving relevant support knowledge, and generating a draft response for human review.
+This project helps automate early support handling by:
 
-```text
-subject + body → ticket type
-subject + body → ticket queue
-subject + body → ticket priority
-ticket text     → customer sentiment
-ticket text     → relevant company policy
-ticket + predictions + policy context → support reply
-```
+- classifying ticket type
+- recommending a support queue
+- predicting ticket priority
+- detecting customer sentiment
+- retrieving company policy context
+- generating a support-agent-reviewable reply
 
----
-
-## Dataset
-
-The main ticket dataset contains multilingual customer support tickets in **English and German**.
-
-Important columns:
-
-| Column     | Use                                      |
-| ---------- | ---------------------------------------- |
-| `subject`  | Short ticket summary                     |
-| `body`     | Main ticket description                  |
-| `type`     | Target for ticket type classification    |
-| `queue`    | Target for ticket routing                |
-| `priority` | Target for priority prediction           |
-| `language` | Used for language-wise evaluation        |
-| `answer`   | Excluded from model input to prevent leakage |
-
-For sentiment analysis, an external Amazon reviews dataset was used. Amazon review ratings were converted into sentiment labels.
-
-| Rating    | Sentiment |
-| --------- | --------- |
-| 1-2 stars | Negative  |
-| 3 stars   | Neutral   |
-| 4-5 stars | Positive  |
-
-For RAG-based retrieval, custom company policy documents were created and stored locally inside the project.
+The system is designed as a **decision-support copilot**, not as an unsupervised auto-send bot. The generated reply should be reviewed by a human support agent before sending.
 
 ---
 
-## Completed Modules
+## Current Status
 
-| Phase    | Module                                    | Status    |
-| -------- | ----------------------------------------- | --------- |
-| Phase 1  | Data understanding and preprocessing      | Completed |
-| Phase 2  | Ticket type classification                | Completed |
-| Phase 3  | Queue / department routing classification | Completed |
-| Phase 4  | Priority prediction                       | Completed |
-| Phase 5  | Sentiment analysis                        | Completed |
-| Phase 6  | RAG knowledge retrieval                   | Completed |
-| Phase 7  | Support reply generation                  | Completed |
-| Phase 8  | FastAPI backend                           | Pending   |
-| Phase 9  | Streamlit dashboard                       | Pending   |
-| Phase 10 | Deployment                                | Pending   |
+| Phase | Module | Status |
+|---|---|---|
+| Phase 1 | Data understanding and preprocessing | Completed |
+| Phase 2 | Ticket type classification | Completed |
+| Phase 3 | Queue / department routing classification | Completed |
+| Phase 4 | Priority prediction | Completed |
+| Phase 5 | Sentiment analysis | Completed |
+| Phase 6 | Multilingual RAG knowledge retrieval | Completed |
+| Phase 7A | Policy-led template reply generation | Completed |
+| Phase 7B | Optional LLM reply generation | Implemented, requires API quota/billing |
+| Phase 7.5 | Multilingual RAG and reply cleanup | Completed |
+| Phase 8 | FastAPI backend | Pending |
+| Phase 9 | Streamlit dashboard | Pending |
+| Phase 10 | Deployment | Pending |
 
 ---
 
-## Modules Built
+## Features Completed
 
-### 1. Ticket Type Classifier
+### 1. Ticket Type Prediction
 
 Predicts the type of customer support issue.
 
@@ -102,11 +86,11 @@ models/ticket_type_baseline.pkl
 
 ---
 
-### 2. Ticket Queue Classifier
+### 2. Ticket Queue Prediction
 
 Predicts which support queue or department should handle the ticket.
 
-Example classes:
+Example queues:
 
 ```text
 Technical Support
@@ -129,7 +113,7 @@ models/ticket_queue_baseline.pkl
 
 ---
 
-### 3. Priority Classifier
+### 3. Priority Prediction
 
 Predicts the urgency level of a customer support ticket.
 
@@ -148,7 +132,7 @@ reports/wrong_priority_predictions.csv
 
 ---
 
-### 4. Sentiment Analyzer
+### 4. Sentiment Analysis
 
 Predicts customer sentiment as:
 
@@ -158,14 +142,20 @@ neutral
 negative
 ```
 
-The sentiment model was trained using an external Amazon reviews dataset. Logistic Regression was selected as the final sentiment model because it achieved better macro F1 and better neutral-class performance than LinearSVC.
+The sentiment model was trained using an external Amazon reviews dataset. Review ratings were converted into sentiment labels.
 
-Since the main support ticket dataset contains both English and German tickets, but the sentiment training dataset is English-only, sentiment is handled as follows:
+| Rating | Sentiment |
+|---|---|
+| 1-2 stars | Negative |
+| 3 stars | Neutral |
+| 4-5 stars | Positive |
 
-| Ticket language | Sentiment method             |
-| --------------- | ---------------------------- |
-| English         | Trained ML sentiment model   |
-| German          | German keyword-rule fallback |
+Because the ticket dataset contains both English and German tickets, sentiment handling is split:
+
+| Ticket language | Sentiment method |
+|---|---|
+| English | Trained ML sentiment model |
+| German | Lightweight German keyword-rule fallback |
 
 Output model:
 
@@ -183,18 +173,18 @@ reports/ticket_sentiment_predictions.csv
 
 ---
 
-### 5. RAG Knowledge Retrieval
+### 5. Multilingual RAG Knowledge Retrieval
 
-A Retrieval-Augmented Generation (RAG) module was implemented to retrieve relevant company policy context before generating customer responses.
+The RAG module retrieves company policy context before reply generation.
 
-Traditional classification models can predict ticket type, queue, priority, and sentiment, but they do not know company-specific policies. The RAG module solves this by searching an internal knowledge base and returning the most relevant policy information for the ticket.
+Traditional classifiers can predict ticket metadata, but they do not know company-specific rules. The RAG layer solves this by searching a local policy knowledge base.
 
 Technologies used:
 
-* LangChain
-* Sentence Transformers
-* Hugging Face Embeddings
-* FAISS Vector Database
+- LangChain
+- Sentence Transformers
+- Hugging Face embeddings
+- FAISS vector database
 
 Policy knowledge base:
 
@@ -212,30 +202,40 @@ account_policy.txt
 technical_support_policy.txt
 ```
 
-Retrieval pipeline:
+The policy documents are currently written in English, but the FAISS index uses multilingual embeddings so German ticket queries can still retrieve relevant English policy documents.
+
+Embedding model:
 
 ```text
-Customer Ticket
-        ↓
-Text Embedding
-        ↓
-FAISS Similarity Search
-        ↓
-Relevant Policy Retrieval
+sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 ```
 
-Example input:
+Current vectorstore path:
 
 ```text
-My product arrived damaged and I want a refund.
+vectorstore/faiss_policy_index_multilingual/
 ```
 
-Example retrieved policy:
+Retrieval flow:
 
 ```text
-Refund Policy
-Customers can request a refund within 30 days of purchase.
-For damaged products, customers may choose either a refund or replacement.
+English/German ticket
+        ↓
+Multilingual embedding
+        ↓
+FAISS similarity search
+        ↓
+Relevant English policy chunks
+```
+
+Example:
+
+```text
+German ticket:
+Ich habe ein beschädigtes Produkt erhalten und möchte eine Rückerstattung.
+
+Retrieved policy:
+refund_policy.txt
 ```
 
 Output files:
@@ -243,66 +243,45 @@ Output files:
 ```text
 notebooks/07_rag_retrieval.ipynb
 src/rag_pipeline.py
-vectorstore/faiss_policy_index/
 reports/rag_test_results.csv
+reports/rag_multilingual_test_results.csv
 ```
 
 ---
 
-### 6. Support Reply Generation
+### 6. Policy-Led Support Reply Generation
 
-A support reply generation module was developed to create professional, human-reviewable responses.
+The reply generator creates professional, human-reviewable support drafts.
 
-The reply generator combines machine learning predictions with retrieved company policy context. This allows the system to generate responses that are not only based on the ticket text, but also grounded in relevant support policies.
+The latest reply generation design is **policy-led**:
+
+- ML predictions are kept as internal metadata.
+- RAG policy context grounds the reply.
+- Customer-facing replies avoid exposing raw labels like `Incident`, `Problem`, or an uncertain predicted queue.
+- Sentiment and priority influence tone and urgency wording.
+- Policy source provides factual grounding.
+
+This avoids making the customer-facing reply depend too heavily on imperfect model predictions.
 
 Inputs used:
 
-* Customer ticket text
-* Predicted ticket type
-* Predicted support queue
-* Predicted ticket priority
-* Predicted customer sentiment
-* Retrieved policy context
+- customer ticket text
+- predicted ticket type
+- predicted support queue
+- predicted priority
+- predicted sentiment
+- retrieved policy context
+- detected language
 
-End-to-end reply pipeline:
-
-```text
-Customer Ticket
-        ↓
-Ticket Type Prediction
-        ↓
-Queue Prediction
-        ↓
-Priority Prediction
-        ↓
-Sentiment Analysis
-        ↓
-RAG Policy Retrieval
-        ↓
-Support Reply Generation
-```
-
-Example input:
+Output includes:
 
 ```text
-My laptop arrived damaged and I want a refund.
-```
-
-Example generated response:
-
-```text
-Dear Customer,
-
-We're sorry to hear about the issue you are facing.
-
-Based on your message, this request appears to be related to the predicted ticket type and should be handled by the predicted support queue.
-
-Relevant policy guidance has been retrieved to help the support team respond accurately.
-
-Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
-
-Best regards,
-Customer Support Team
+model_predictions
+policy_source
+policy_suggested_queue
+policy_suggested_action
+generation_mode
+generated_reply
 ```
 
 Output files:
@@ -315,30 +294,69 @@ reports/generated_reply_examples.csv
 
 ---
 
-## Preprocessing
+### 7. Optional LLM Reply Generation
 
-Text preprocessing includes:
+LLM-based reply generation is implemented as an optional mode.
 
-* Combining `subject` and `body`
-* Lowercasing text
-* Removing URLs
-* Removing extra whitespace
-* Preserving German characters during ticket preprocessing
-* Avoiding aggressive English-only cleaning for multilingual ticket models
+Default behavior:
 
-For the external Amazon sentiment dataset, review text was cleaned separately for English sentiment classification.
+```python
+use_llm=False
+```
+
+This uses the free, local, policy-led template reply.
+
+Optional behavior:
+
+```python
+use_llm=True
+```
+
+This attempts to generate a more natural reply using an OpenAI model and the retrieved policy context.
+
+If the LLM call fails because of missing API key, quota, billing, or any runtime issue, the system automatically falls back to the template reply.
+
+This keeps the project usable without paid API access.
+
+Required `.env` variables for optional LLM mode:
+
+```env
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-4.1-mini
+```
+
+Important:
+
+```text
+ChatGPT subscription and OpenAI API billing are separate.
+An API key alone does not guarantee usable quota.
+```
 
 ---
 
-## Data Leakage Prevention
+## Dataset
 
-The ticket classifiers only use:
+The main ticket dataset contains multilingual customer support tickets in **English and German**.
+
+Important columns:
+
+| Column | Use |
+|---|---|
+| `subject` | Short ticket summary |
+| `body` | Main ticket description |
+| `type` | Target for ticket type classification |
+| `queue` | Target for ticket routing |
+| `priority` | Target for priority prediction |
+| `language` | Used for language-wise evaluation |
+| `answer` | Excluded from model input to prevent leakage |
+
+For supervised ticket models, the main input is:
 
 ```text
 subject + body
 ```
 
-The following columns are **not used as model input**:
+The following columns are not used as model input:
 
 ```text
 answer
@@ -347,9 +365,22 @@ queue
 priority
 ```
 
-`answer` is excluded from classification models because it is created after ticket resolution. Using it would leak post-resolution information.
+`answer` is excluded because it is post-resolution information and would cause data leakage.
 
-`type`, `queue`, and `priority` are used only as target labels for their respective supervised learning tasks.
+---
+
+## Preprocessing
+
+Text preprocessing includes:
+
+- combining `subject` and `body`
+- lowercasing text
+- removing URLs
+- removing extra whitespace
+- preserving German characters during ticket preprocessing
+- avoiding aggressive English-only cleaning for multilingual ticket models
+
+For the external Amazon sentiment dataset, review text was cleaned separately for English sentiment classification.
 
 ---
 
@@ -357,31 +388,32 @@ priority
 
 For ticket type, queue, and priority prediction:
 
-* TF-IDF + Logistic Regression
-* TF-IDF + LinearSVC
-* TF-IDF + LinearSVC + GridSearchCV
-* Word + Character TF-IDF experiment for multilingual robustness
+- TF-IDF + Logistic Regression
+- TF-IDF + LinearSVC
+- TF-IDF + LinearSVC + GridSearchCV
+- Word + Character TF-IDF experiment for multilingual robustness
 
 For sentiment analysis:
 
-* TF-IDF + Logistic Regression
-* TF-IDF + LinearSVC
+- TF-IDF + Logistic Regression
+- TF-IDF + LinearSVC
 
 For RAG retrieval:
 
-* Sentence Transformer embeddings
-* FAISS similarity search
-* Local policy knowledge base retrieval
+- Sentence Transformer embeddings
+- multilingual Hugging Face embeddings
+- FAISS similarity search
+- local policy knowledge base retrieval
 
-Final selected models and components:
+Final selected components:
 
 ```text
 Ticket Type Classifier  : TF-IDF + LinearSVC/GridSearchCV
 Ticket Queue Classifier : TF-IDF + LinearSVC/GridSearchCV
 Priority Classifier     : TF-IDF-based best classifier
-Sentiment Analyzer      : TF-IDF + Logistic Regression
-RAG Retriever           : Sentence Transformers + FAISS
-Reply Generator         : Template-based response generation using ML predictions and RAG context
+Sentiment Analyzer      : TF-IDF + Logistic Regression + German rule fallback
+RAG Retriever           : Multilingual Sentence Transformers + FAISS
+Reply Generator         : Policy-led template generation + optional LLM mode
 ```
 
 ---
@@ -390,74 +422,87 @@ Reply Generator         : Template-based response generation using ML prediction
 
 Metrics used:
 
-* Accuracy
-* Precision
-* Recall
-* Macro F1-score
-* Weighted F1-score
-* Confusion matrix
-* Wrong prediction analysis
-* Language-wise evaluation where applicable
-* RAG retrieval test cases
-* Generated reply examples
+- Accuracy
+- Precision
+- Recall
+- Macro F1-score
+- Weighted F1-score
+- Confusion matrix
+- Wrong prediction analysis
+- Language-wise evaluation
+- RAG retrieval test cases
+- Generated reply examples
 
 ### Queue Classifier Results
 
-| Model                    | Accuracy | Macro F1 | Weighted F1 |
-| ------------------------ | -------: | -------: | ----------: |
-| Logistic Regression      |     0.47 |     0.47 |        0.47 |
-| LinearSVC                |     0.59 |     0.59 |        0.59 |
-| LinearSVC + GridSearchCV |     0.61 |     0.60 |        0.61 |
+| Model | Accuracy | Macro F1 | Weighted F1 |
+|---|---:|---:|---:|
+| Logistic Regression | 0.47 | 0.47 | 0.47 |
+| LinearSVC | 0.59 | 0.59 | 0.59 |
+| LinearSVC + GridSearchCV | 0.61 | 0.60 | 0.61 |
 
 ### Queue Language-Wise Evaluation
 
 | Language | Accuracy | Macro F1 | Weighted F1 |
-| -------- | -------: | -------: | ----------: |
-| German   |     0.49 |     0.46 |        0.49 |
-| English  |     0.70 |     0.71 |        0.70 |
+|---|---:|---:|---:|
+| German | 0.49 | 0.46 | 0.49 |
+| English | 0.70 | 0.71 | 0.70 |
 
-Evaluation reports are saved in:
+The queue classifier is stronger on English than German. This is documented as a limitation and future improvement area.
+
+---
+
+## Example End-to-End Output
+
+Example input:
 
 ```text
-reports/priority_model_comparison.csv
-reports/sentiment_model_comparison.csv
-reports/rag_test_results.csv
-reports/generated_reply_examples.csv
+My laptop arrived damaged and I want a refund.
 ```
 
----
+Example internal output:
 
-## Multilingual Handling
+```text
+Language: en
 
-The ticket type, queue, and priority models were trained on the multilingual ticket dataset containing both English and German examples.
+Model Predictions:
+- Type: Incident
+- Queue: Technical Support
+- Priority: high
+- Sentiment: negative
 
-Sentiment analysis is handled differently:
+Policy Source:
+refund_policy.txt
 
-* English tickets use the trained ML sentiment model.
-* German tickets use a lightweight keyword-rule fallback because the sentiment training data is English-only.
+Policy Suggested Queue:
+Billing or Customer Support
 
-This avoids pretending that the English sentiment model magically understands German. A rare triumph over delusion.
+Generation Mode:
+template
+```
 
-The current RAG policy knowledge base is written in English. Multilingual policy retrieval can be improved later by adding German policy documents or using multilingual embeddings.
+Example customer-facing reply:
 
----
+```text
+Dear Customer,
 
-## Challenges Faced and Resolutions
+We're sorry to hear about the issue you're facing.
 
-| Challenge                                                | Resolution                                                                               |
-| -------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Confusion between `type` and `queue`                     | Defined `type` as issue nature and `queue` as routing department. Built separate models. |
-| Data leakage concern                                     | Excluded post-resolution fields like `answer`.                                           |
-| German text handling                                     | Used light preprocessing and preserved German characters in ticket preprocessing.        |
-| Logistic Regression underperformed for some ticket tasks | Tested LinearSVC and GridSearchCV.                                                       |
-| Large GridSearchCV search time                           | Reduced the parameter grid to a practical size.                                          |
-| LinearSVC has no `predict_proba()`                       | Used `decision_function()` and confidence margin instead.                                |
-| Problem vs Incident confusion                            | Saved wrong predictions and documented it as a limitation.                               |
-| Weak German queue performance                            | Added language-wise evaluation and tested Word + Character TF-IDF.                       |
-| Sentiment dataset did not include German labels          | Used English ML sentiment model plus German keyword-rule fallback.                       |
-| Neutral sentiment was difficult                          | Selected model using macro F1 and neutral-class performance instead of accuracy alone.   |
-| Models lacked company-specific knowledge                 | Added RAG retrieval using FAISS and policy documents.                                    |
-| Reply generation needed to be reviewable                 | Built a template-based reply generator grounded in predictions and retrieved context.    |
+Based on your message, we found a relevant company policy related to this issue.
+
+We understand this may need prompt attention, so the support team should review it carefully.
+
+Relevant policy reference:
+For damaged products, customers may choose either a refund or replacement.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Best regards,
+Customer Support Team
+```
+
+Notice that raw model labels are kept internally instead of being exposed directly in the customer reply.
 
 ---
 
@@ -500,7 +545,7 @@ customer-support-copilot/
 │   └── generate_reply.py
 │
 ├── vectorstore/
-│   └── faiss_policy_index/
+│   └── faiss_policy_index_multilingual/
 │
 ├── models/
 │   ├── ticket_type_baseline.pkl
@@ -519,6 +564,7 @@ customer-support-copilot/
 │   ├── wrong_sentiment_predictions.csv
 │   ├── ticket_sentiment_predictions.csv
 │   ├── rag_test_results.csv
+│   ├── rag_multilingual_test_results.csv
 │   └── generated_reply_examples.csv
 │
 ├── README.md
@@ -530,83 +576,83 @@ customer-support-copilot/
 
 ## How to Run
 
-Install dependencies:
+### 1. Create and activate virtual environment
+
+```bash
+python -m venv venv
+source venv/Scripts/activate
+```
+
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run ticket prediction:
+### 3. Build or rebuild multilingual FAISS index
+
+Run:
 
 ```bash
-python src/predict_ticket.py
+jupyter notebook
 ```
 
-Run RAG policy retrieval:
+Then execute:
+
+```text
+notebooks/07_rag_retrieval.ipynb
+```
+
+This creates:
+
+```text
+vectorstore/faiss_policy_index_multilingual/
+```
+
+### 4. Test RAG retrieval
 
 ```bash
 python src/rag_pipeline.py
 ```
 
-Run full reply generation:
+### 5. Run full reply generation
 
 ```bash
 python src/generate_reply.py
 ```
 
----
+### 6. Optional LLM mode
 
-## Sample Input
+Create `.env` in the project root:
 
-```text
-I was charged twice for my subscription.
-Please refund the duplicate payment.
+```env
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-4.1-mini
 ```
 
-## Sample Output
+Then test only one or two examples:
 
-```text
-Type      : Problem
-Queue     : Billing and Payments
-Priority  : High
-Sentiment : Negative
+```bash
+python -c "from src.generate_reply import analyze_ticket_and_generate_reply; r=analyze_ticket_and_generate_reply('My laptop arrived damaged and I want a refund.', use_llm=True); print(r['generation_mode']); print(r['generated_reply'])"
 ```
 
-The prediction script also prints decision scores and confidence margins for ticket type, queue, and priority predictions.
-
-## Sample RAG + Reply Output
-
-```text
-Policy Source: refund_policy.txt
-
-Generated Reply:
-Dear Customer,
-
-We're sorry to hear about the issue you are facing.
-
-Based on your message, this request appears to be related to the predicted ticket type and should be handled by the predicted support queue.
-
-Relevant policy guidance has been retrieved to help the support team respond accurately.
-
-Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
-
-Best regards,
-Customer Support Team
-```
+If quota or billing is unavailable, the system falls back to template mode.
 
 ---
 
 ## Current Limitations
 
-* LinearSVC decision scores are not true probabilities.
-* German queue classification is weaker than English queue classification.
-* `Problem` and `Incident` can be confused.
-* Some queue labels overlap, especially Technical Support, IT Support, and Product Support.
-* Sentiment analysis is trained on an external English review dataset, not the original ticket dataset.
-* German sentiment uses keyword-rule fallback, not a trained German sentiment model.
-* The current RAG policy base is small and manually created.
-* Reply generation is currently template-based, not LLM-powered.
-* The system is not yet exposed through an API or dashboard.
+- LinearSVC decision scores are not true probabilities.
+- German queue classification is weaker than English queue classification.
+- `Problem` and `Incident` can be confused.
+- Some queue labels overlap, especially Technical Support, IT Support, and Product Support.
+- Sentiment analysis is trained on an external English review dataset, not the original ticket dataset.
+- German sentiment currently uses a keyword-rule fallback, not a trained German sentiment model.
+- Policy documents are currently English-only.
+- German tickets can retrieve English policy documents through multilingual embeddings, but the knowledge base is not fully bilingual yet.
+- LLM reply generation is implemented but requires valid API quota/billing.
+- The current RAG policy base is small and manually created.
+- The system is not yet exposed through an API or dashboard.
 
 ---
 
@@ -614,32 +660,48 @@ Customer Support Team
 
 Planned next modules and upgrades:
 
-* FastAPI backend
-* Streamlit dashboard
-* Cloud deployment
-* OpenAI/LLM-powered response generation
-* Multilingual RAG knowledge base
-* Better German sentiment model using a German or multilingual sentiment dataset
-* Multilingual transformer upgrade using `distilbert-base-multilingual-cased` or `xlm-roberta-base`
-* Model monitoring and feedback loop for support agent corrections
+- FastAPI backend
+- Streamlit dashboard
+- Cloud deployment
+- Larger multilingual policy knowledge base
+- German policy documents
+- Better German sentiment model using German or multilingual sentiment data
+- Multilingual transformer upgrade using `distilbert-base-multilingual-cased` or `xlm-roberta-base`
+- Optional OpenAI/LLM-powered response generation in production mode
+- Human approval workflow before sending generated replies
+- Model monitoring and feedback loop from support agent corrections
 
 ---
 
-## Current Status
+## Next Milestone
 
 ```text
-Completed:
-Data Understanding & Preprocessing
-Ticket Type Classification
-Ticket Queue Routing
-Priority Prediction
-Sentiment Analysis
-RAG Knowledge Retrieval
-Support Reply Generation
+Phase 8: FastAPI Backend
 ```
 
-Next milestone:
+The next goal is to expose the working ML + RAG + reply-generation pipeline through an API endpoint.
+
+Expected endpoint:
 
 ```text
-FastAPI Backend
+POST /analyze-ticket
+```
+
+Expected response:
+
+```json
+{
+  "ticket": "...",
+  "language": "en",
+  "model_predictions": {
+    "ticket_type": "...",
+    "queue": "...",
+    "priority": "...",
+    "sentiment": "..."
+  },
+  "policy_source": "refund_policy.txt",
+  "policy_suggested_queue": "Billing or Customer Support",
+  "generation_mode": "template",
+  "generated_reply": "..."
+}
 ```

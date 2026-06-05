@@ -1,0 +1,143 @@
+ticket,language,expected_policy,retrieved_policy,is_correct,retrieved_text
+My product arrived damaged and I want a refund.,en,refund_policy.txt,refund_policy.txt,True,"Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority."
+Ich habe ein beschädigtes Produkt erhalten und möchte eine Rückerstattung.,de,refund_policy.txt,refund_policy.txt,True,"Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority."
+My order has not arrived and tracking is not updating.,en,shipping_policy.txt,shipping_policy.txt,True,"Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund."
+Mein Paket ist noch nicht angekommen und die Sendungsverfolgung aktualisiert sich nicht.,de,shipping_policy.txt,shipping_policy.txt,True,"Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund."
+I cannot login to my account.,en,account_policy.txt,account_policy.txt,True,"Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification."
+Ich kann mich nicht in mein Konto einloggen.,de,account_policy.txt,account_policy.txt,True,"Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification."
+My charger stopped working within warranty period.,en,warranty_policy.txt,warranty_policy.txt,True,"Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry."
+Mein Ladegerät funktioniert innerhalb der Garantiezeit nicht mehr.,de,warranty_policy.txt,warranty_policy.txt,True,"Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry."
+My phone battery drains very quickly.,en,technical_support_policy.txt,warranty_policy.txt,False,"Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry."
+Der Akku meines Telefons entlädt sich sehr schnell.,de,technical_support_policy.txt,warranty_policy.txt,False,"Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry."

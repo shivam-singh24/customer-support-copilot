@@ -1,6 +1,20 @@
-import os
+"""
+RAG policy retrieval pipeline for the Customer Support Copilot.
 
-from langchain_community.embeddings import HuggingFaceEmbeddings
+This module loads a FAISS index built from company policy documents and retrieves
+relevant policy chunks for English or German support tickets.
+
+Important:
+- Policy documents are currently written in English.
+- The FAISS index must be rebuilt with the same multilingual embedding model used here.
+- Default index path: vectorstore/faiss_policy_index_multilingual
+"""
+
+import os
+from functools import lru_cache
+from typing import Dict, List
+
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
 
@@ -9,75 +23,75 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VECTORSTORE_DIR = os.path.join(
     BASE_DIR,
     "vectorstore",
-    "faiss_policy_index"
+    "faiss_policy_index_multilingual",
 )
 
-EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 
-def load_policy_vectorstore():
-    """
-    Loads the saved FAISS policy vectorstore.
-    This is used during prediction/retrieval instead of rebuilding the index.
-    """
+@lru_cache(maxsize=1)
+def get_embedding_model() -> HuggingFaceEmbeddings:
+    """Load the multilingual sentence-transformer embedding model once."""
+    return HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
 
-    embedding_model = HuggingFaceEmbeddings(
-        model_name=EMBEDDING_MODEL_NAME
-    )
 
-    vectorstore = FAISS.load_local(
+@lru_cache(maxsize=1)
+def get_vectorstore() -> FAISS:
+    """Load the multilingual FAISS vectorstore once, with a clear error if missing."""
+    if not os.path.isdir(VECTORSTORE_DIR):
+        raise FileNotFoundError(
+            f"FAISS vectorstore not found at: {VECTORSTORE_DIR}\n"
+            "Run notebooks/06_rag_knowledge_retrieval.ipynb first to rebuild and save "
+            "the multilingual FAISS index."
+        )
+
+    return FAISS.load_local(
         VECTORSTORE_DIR,
-        embeddings=embedding_model,
-        allow_dangerous_deserialization=True
+        embeddings=get_embedding_model(),
+        allow_dangerous_deserialization=True,
     )
 
-    return vectorstore
 
-
-def retrieve_policy_context(ticket_text, top_k=2):
+def retrieve_policy_context(ticket_text: str, top_k: int = 3) -> List[Dict[str, str]]:
     """
-    Retrieves the most relevant policy chunks for a given customer ticket.
+    Retrieve relevant company policy context for English or German support tickets.
 
-    Parameters:
-        ticket_text (str): Customer support ticket text.
-        top_k (int): Number of policy chunks to retrieve.
+    Args:
+        ticket_text: Customer ticket text in English or German.
+        top_k: Number of policy chunks to retrieve. Default is 3 so borderline
+            cases like battery/warranty can return both technical and warranty
+            context when relevant.
 
     Returns:
-        list: Retrieved policy chunks with source and content.
+        List of dictionaries with source filename and chunk content.
     """
+    if not str(ticket_text).strip():
+        return []
 
-    vectorstore = load_policy_vectorstore()
+    vectorstore = get_vectorstore()
+    docs = vectorstore.similarity_search(str(ticket_text), k=top_k)
 
-    retrieved_docs = vectorstore.similarity_search(
-        ticket_text,
-        k=top_k
-    )
-
-    results = []
-
-    for doc in retrieved_docs:
-        source_file = os.path.basename(doc.metadata.get("source", ""))
-
-        results.append({
-            "source": source_file,
-            "content": doc.page_content
-        })
+    results: List[Dict[str, str]] = []
+    for doc in docs:
+        results.append(
+            {
+                "source": os.path.basename(doc.metadata.get("source", "unknown_source")),
+                "content": doc.page_content,
+            }
+        )
 
     return results
 
 
 if __name__ == "__main__":
-    sample_ticket = "My product arrived damaged and I want a refund."
+    sample_queries = [
+        "My product arrived damaged and I want a refund.",
+        "Ich habe ein beschädigtes Produkt erhalten und möchte eine Rückerstattung.",
+    ]
 
-    retrieved_context = retrieve_policy_context(
-        sample_ticket,
-        top_k=2
-    )
-
-    print("Ticket:", sample_ticket)
-
-    for i, context in enumerate(retrieved_context, 1):
-        print("=" * 80)
-        print(f"Result {i}")
-        print("Source:", context["source"])
-        print(context["content"])
+    for query in sample_queries:
+        print("=" * 100)
+        print("Query:", query)
+        for item in retrieve_policy_context(query, top_k=3):
+            print("Source:", item["source"])
+            print(item["content"][:400])

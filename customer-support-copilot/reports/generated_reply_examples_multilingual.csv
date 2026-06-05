@@ -1,0 +1,535 @@
+ticket,language,model_predictions,policy_source,policy_context,policy_suggested_queue,policy_suggested_action,generation_mode,generated_reply,llm_error,predicted_type,predicted_queue,predicted_priority,predicted_sentiment
+My laptop arrived damaged and I want a refund.,en,"{'ticket_type': 'Incident', 'queue': 'Technical Support', 'priority': 'high', 'sentiment': 'negative'}",refund_policy.txt,"[Policy Source 1: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.
+
+[Policy Source 2: refund_policy.txt]
+Refund Policy
+
+Customers can request a refund within 30 days of purchase.
+
+Refunds are allowed when:
+- The product is damaged on arrival.
+- The wrong item was delivered.
+- The product does not match the description.
+- The customer was charged incorrectly.
+- The customer received a defective item.
+
+[Policy Source 3: account_policy.txt]
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.",Billing or Customer Support,review refund eligibility and ask for proof of purchase,template,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, we found a relevant company policy related to this issue.
+
+We understand this may need prompt attention, so the support team should review it carefully.
+
+Relevant policy reference:
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Internal handling note:
+This request may require the support team to review refund eligibility and ask for proof of purchase.
+
+Best regards,
+Customer Support Team",,Incident,Technical Support,high,negative
+Ich habe einen beschädigten Laptop erhalten und möchte eine Rückerstattung.,de,"{'ticket_type': 'Change', 'queue': 'Returns and Exchanges', 'priority': 'medium', 'sentiment': 'neutral'}",refund_policy.txt,"[Policy Source 1: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.
+
+[Policy Source 2: account_policy.txt]
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+[Policy Source 3: warranty_policy.txt]
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.",Billing or Customer Support,review refund eligibility and ask for proof of purchase,template,"Sehr geehrte Kundin, sehr geehrter Kunde,
+
+Vielen Dank, dass Sie den Kundensupport kontaktiert haben.
+
+Basierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.
+
+Ihre Anfrage wurde erfasst und sollte vom zuständigen Support-Team bearbeitet werden.
+
+Richtlinienhinweis für das Support-Team:
+Es wurde eine relevante Unternehmensrichtlinie gefunden: refund_policy.txt. Die Richtliniendokumente liegen aktuell auf Englisch vor und sollten vor dem Versenden geprüft werden.
+
+Empfohlener nächster Schritt:
+Bitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.
+
+Interner Bearbeitungshinweis:
+Das Support-Team sollte die Erstattungsberechtigung prüfen und gegebenenfalls einen Kaufnachweis anfordern.
+
+Mit freundlichen Grüßen,
+Customer Support Team",,Change,Returns and Exchanges,medium,neutral
+My order has not arrived and tracking is not updating.,en,"{'ticket_type': 'Problem', 'queue': 'Technical Support', 'priority': 'medium', 'sentiment': 'negative'}",shipping_policy.txt,"[Policy Source 1: shipping_policy.txt]
+Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund.
+
+[Policy Source 2: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.
+
+[Policy Source 3: warranty_policy.txt]
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.",Logistics or Customer Support,check tracking status and verify courier information,template,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, we found a relevant company policy related to this issue.
+
+Your request has been noted and should be handled by the appropriate support team.
+
+Relevant policy reference:
+Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Internal handling note:
+This request may require the support team to check tracking status and verify courier information.
+
+Best regards,
+Customer Support Team",,Problem,Technical Support,medium,negative
+Mein Paket ist noch nicht angekommen und die Sendungsverfolgung aktualisiert sich nicht.,de,"{'ticket_type': 'Problem', 'queue': 'Customer Service', 'priority': 'medium', 'sentiment': 'neutral'}",shipping_policy.txt,"[Policy Source 1: shipping_policy.txt]
+Shipping Policy
+
+Standard delivery usually takes 5 to 7 business days.
+
+Customers can contact support when:
+- The order is delayed.
+- Tracking information is not updating.
+- The package is marked as delivered but not received.
+- The wrong delivery address was used.
+- The package is lost during transit.
+
+For delayed shipments, support agents should first check the tracking status.
+
+For lost packages, the support team should verify courier information before offering replacement or refund.
+
+[Policy Source 2: warranty_policy.txt]
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.
+
+[Policy Source 3: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.",Logistics or Customer Support,check tracking status and verify courier information,template,"Sehr geehrte Kundin, sehr geehrter Kunde,
+
+Vielen Dank, dass Sie den Kundensupport kontaktiert haben.
+
+Basierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.
+
+Ihre Anfrage wurde erfasst und sollte vom zuständigen Support-Team bearbeitet werden.
+
+Richtlinienhinweis für das Support-Team:
+Es wurde eine relevante Unternehmensrichtlinie gefunden: shipping_policy.txt. Die Richtliniendokumente liegen aktuell auf Englisch vor und sollten vor dem Versenden geprüft werden.
+
+Empfohlener nächster Schritt:
+Bitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.
+
+Interner Bearbeitungshinweis:
+Das Support-Team sollte den Sendungsverlauf prüfen und die Kurierinformationen verifizieren.
+
+Mit freundlichen Grüßen,
+Customer Support Team",,Problem,Customer Service,medium,neutral
+My phone battery drains very quickly.,en,"{'ticket_type': 'Incident', 'queue': 'Customer Service', 'priority': 'high', 'sentiment': 'positive'}",warranty_policy.txt,"[Policy Source 1: warranty_policy.txt]
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.
+
+[Policy Source 2: account_policy.txt]
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+[Policy Source 3: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.",Warranty Support or Technical Support,verify purchase date and warranty eligibility,template,"Dear Customer,
+
+Thank you for reaching out to us.
+
+Based on your message, we found a relevant company policy related to this issue.
+
+We understand this may need prompt attention, so the support team should review it carefully.
+
+Relevant policy reference:
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Internal handling note:
+This request may require the support team to verify purchase date and warranty eligibility.
+
+Best regards,
+Customer Support Team",,Incident,Customer Service,high,positive
+Der Akku meines Telefons entlädt sich sehr schnell.,de,"{'ticket_type': 'Problem', 'queue': 'Technical Support', 'priority': 'high', 'sentiment': 'neutral'}",warranty_policy.txt,"[Policy Source 1: warranty_policy.txt]
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.
+
+[Policy Source 2: account_policy.txt]
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+[Policy Source 3: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.",Warranty Support or Technical Support,verify purchase date and warranty eligibility,template,"Sehr geehrte Kundin, sehr geehrter Kunde,
+
+Vielen Dank, dass Sie den Kundensupport kontaktiert haben.
+
+Basierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.
+
+Wir verstehen, dass dieses Anliegen dringend sein kann und entsprechend zeitnah geprüft werden sollte.
+
+Richtlinienhinweis für das Support-Team:
+Es wurde eine relevante Unternehmensrichtlinie gefunden: warranty_policy.txt. Die Richtliniendokumente liegen aktuell auf Englisch vor und sollten vor dem Versenden geprüft werden.
+
+Empfohlener nächster Schritt:
+Bitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.
+
+Interner Bearbeitungshinweis:
+Das Support-Team sollte das Kaufdatum und die Garantiebedingungen prüfen.
+
+Mit freundlichen Grüßen,
+Customer Support Team",,Problem,Technical Support,high,neutral
+I cannot login to my account.,en,"{'ticket_type': 'Incident', 'queue': 'Technical Support', 'priority': 'high', 'sentiment': 'negative'}",account_policy.txt,"[Policy Source 1: account_policy.txt]
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+[Policy Source 2: account_policy.txt]
+Account issues should be assigned to Account Support.
+Compromised account reports should be marked as high priority.
+
+[Policy Source 3: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.",Account Support,verify identity and check account access status,template,"Dear Customer,
+
+We’re sorry to hear about the issue you’re facing.
+
+Based on your message, we found a relevant company policy related to this issue.
+
+We understand this may need prompt attention, so the support team should review it carefully.
+
+Relevant policy reference:
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+Recommended next step:
+Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
+
+Internal handling note:
+This request may require the support team to verify identity and check account access status.
+
+Best regards,
+Customer Support Team",,Incident,Technical Support,high,negative
+Ich kann mich nicht in mein Konto einloggen.,de,"{'ticket_type': 'Incident', 'queue': 'Billing and Payments', 'priority': 'medium', 'sentiment': 'neutral'}",account_policy.txt,"[Policy Source 1: account_policy.txt]
+Account Policy
+
+Customers can request help for account login, password reset, profile update, email change, and account recovery.
+
+For login issues:
+- Verify the registered email address.
+- Ask the customer to reset their password.
+- Check whether the account is locked.
+- Escalate if the account may be compromised.
+
+For email change requests, support agents must verify customer identity.
+
+For security issues, support agents should not share sensitive account information without verification.
+
+[Policy Source 2: refund_policy.txt]
+Refunds are not allowed when:
+- The product was damaged because of customer misuse.
+- The refund request is made after 30 days.
+- The customer cannot provide proof of purchase.
+- The item was purchased from an unauthorized seller.
+
+For damaged products, customers may choose either a refund or replacement.
+
+Refund requests should be assigned to the Billing or Customer Support queue depending on the issue.
+High-value refund disputes should be marked as high priority.
+
+[Policy Source 3: warranty_policy.txt]
+Warranty Policy
+
+Products include a 1-year limited warranty from the date of purchase.
+
+Warranty covers:
+- Manufacturing defects.
+- Hardware failure under normal use.
+- Battery or charging defects.
+- Product malfunction not caused by misuse.
+- Device failure within the warranty period.
+
+Warranty does not cover:
+- Physical damage caused by the customer.
+- Water damage.
+- Unauthorized repair.
+- Accidental damage.
+- Damage after warranty expiry.",Account Support,verify identity and check account access status,template,"Sehr geehrte Kundin, sehr geehrter Kunde,
+
+Vielen Dank, dass Sie den Kundensupport kontaktiert haben.
+
+Basierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.
+
+Ihre Anfrage wurde erfasst und sollte vom zuständigen Support-Team bearbeitet werden.
+
+Richtlinienhinweis für das Support-Team:
+Es wurde eine relevante Unternehmensrichtlinie gefunden: account_policy.txt. Die Richtliniendokumente liegen aktuell auf Englisch vor und sollten vor dem Versenden geprüft werden.
+
+Empfohlener nächster Schritt:
+Bitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.
+
+Interner Bearbeitungshinweis:
+Das Support-Team sollte die Identität verifizieren und den Kontozugriffsstatus prüfen.
+
+Mit freundlichen Grüßen,
+Customer Support Team",,Incident,Billing and Payments,medium,neutral
