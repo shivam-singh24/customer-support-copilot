@@ -4,32 +4,41 @@
 
 AI Customer Support Copilot is an end-to-end AI/ML and NLP project for customer support ticket analysis and response assistance.
 
-The system analyzes a customer ticket, predicts operational metadata, retrieves relevant company policy, and generates a human-reviewable support reply.
+The system analyzes a customer ticket, predicts operational metadata, routes the ticket through an intent/workflow layer, conditionally retrieves relevant company policy, and generates a human-reviewable support reply.
 
 ```text
 Customer ticket
       ↓
-Intent router
-- support-policy issue
+Language detection
+      ↓
+Intent router / workflow classifier
+- refund issue
+- shipping issue
+- account issue
+- technical issue
+- warranty issue
 - sales/product inquiry
 - positive feedback
 - ambiguous/general inquiry
       ↓
-ML predictions
+ML metadata predictions
 - ticket type
 - support queue
 - priority
 - sentiment
       ↓
-Conditional multilingual RAG retrieval
-- runs only for support-policy issues
+Decision layer
+- support-policy issue → use multilingual RAG
+- sales/product/feedback/ambiguous/general → skip RAG
       ↓
 Policy-led or intent-led reply generation
-- template fallback by default
+- template mode by default
 - optional LLM mode when API quota is available
+      ↓
+FastAPI backend response
 ```
 
-This project is currently at the **pre-FastAPI stage**. The core ML + RAG + reply-generation pipeline is working. Backend, dashboard, and deployment are the next milestones.
+The project is currently at the **FastAPI validation stage**. The core ML + intent router + multilingual RAG + reply generation pipeline is working locally through a FastAPI backend. The next major milestone is the Streamlit dashboard.
 
 ---
 
@@ -43,7 +52,8 @@ This project helps automate early support handling by:
 - recommending a support queue
 - predicting ticket priority
 - detecting customer sentiment
-- retrieving company policy context
+- detecting workflow intent before RAG
+- retrieving company policy context only when needed
 - generating a support-agent-reviewable reply
 
 The system is designed as a **decision-support copilot**, not as an unsupervised auto-send bot. The generated reply should be reviewed by a human support agent before sending.
@@ -64,7 +74,7 @@ The system is designed as a **decision-support copilot**, not as an unsupervised
 | Phase 7B | Optional LLM reply generation | Implemented, requires API quota/billing |
 | Phase 7.5 | Multilingual RAG and reply cleanup | Completed |
 | Phase 8A | Intent router / workflow classifier | Completed |
-| Phase 8B | FastAPI backend | Implemented locally / testing |
+| Phase 8B | FastAPI backend | Implemented locally, validation in progress |
 | Phase 9 | Streamlit dashboard | Pending |
 | Phase 10 | Deployment | Pending |
 
@@ -182,7 +192,7 @@ reports/ticket_sentiment_predictions.csv
 
 ### 5. Intent Router / Workflow Classifier
 
-A trained intent router now runs before RAG. It decides whether the ticket should use policy retrieval or follow a non-policy workflow.
+A trained intent router runs before RAG. It decides whether the ticket should use policy retrieval or follow a non-policy workflow.
 
 Intent labels:
 
@@ -204,13 +214,33 @@ Output model:
 models/intent_router.pkl
 ```
 
-The router prevents non-support messages like product inquiries or positive feedback from triggering irrelevant RAG retrieval.
+Training files:
+
+```text
+data/processed/intent_router_dataset.csv
+notebooks/09_intent_router.ipynb
+```
+
+The router prevents non-support messages like product inquiries, positive feedback, and vague requests from triggering irrelevant RAG retrieval.
+
+Example behavior:
+
+```text
+Input:
+I want to know about laptop Ryzen 5.
+
+Detected intent:
+sales_or_product_inquiry
+
+RAG used:
+false
+```
 
 ---
 
 ### 6. Multilingual RAG Knowledge Retrieval
 
-The RAG module retrieves company policy context before reply generation.
+The RAG module retrieves company policy context before reply generation, but only for support-policy issues identified by the intent router.
 
 Traditional classifiers can predict ticket metadata, but they do not know company-specific rules. The RAG layer solves this by searching a local policy knowledge base.
 
@@ -256,18 +286,25 @@ Retrieval flow:
 ```text
 English/German ticket
         ↓
+Intent router says support-policy issue
+        ↓
 Multilingual embedding
         ↓
 FAISS similarity search
         ↓
-Relevant English policy chunks
+Policy reranking / preferred policy selection
+        ↓
+Relevant English policy context
 ```
 
 Example:
 
 ```text
 German ticket:
-Ich habe ein beschädigtes Produkt erhalten und möchte eine Rückerstattung.
+Ich habe den falschen Artikel erhalten und möchte mein Geld zurück.
+
+Detected intent:
+refund_issue
 
 Retrieved policy:
 refund_policy.txt
@@ -276,7 +313,7 @@ refund_policy.txt
 Output files:
 
 ```text
-notebooks/07_rag_retrieval.ipynb
+notebooks/07_rag_knowledge_retrieval.ipynb
 src/rag_pipeline.py
 reports/rag_test_results.csv
 reports/rag_multilingual_test_results.csv
@@ -284,39 +321,41 @@ reports/rag_multilingual_test_results.csv
 
 ---
 
-### 7. Policy-Led Support Reply Generation
+### 7. Policy-Led and Intent-Led Reply Generation
 
 The reply generator creates professional, human-reviewable support drafts.
 
-The latest reply generation design is **policy-led**:
+The latest reply generation design is **policy-led for support issues** and **intent-led for non-support workflows**:
 
 - ML predictions are kept as internal metadata.
-- RAG policy context grounds the reply.
-- Customer-facing replies avoid exposing raw labels like `Incident`, `Problem`, or an uncertain predicted queue.
+- Intent router decides whether RAG is needed.
+- RAG policy context grounds support replies.
+- Sales/product, positive feedback, ambiguous, and general inquiries skip RAG.
+- Customer-facing replies avoid exposing raw labels like `Incident`, `Problem`, or uncertain predicted queues.
 - Sentiment and priority influence tone and urgency wording.
-- Policy source provides factual grounding.
-
-This avoids making the customer-facing reply depend too heavily on imperfect model predictions.
-
-Inputs used:
-
-- customer ticket text
-- predicted ticket type
-- predicted support queue
-- predicted priority
-- predicted sentiment
-- retrieved policy context
-- detected language
+- The final decision layer can override noisy model outputs when the intent is clear.
 
 Output includes:
 
 ```text
+ticket
+language
+detected_intent
+intent_confidence
+intent_router_source
+rag_used
+requires_human_review
 model_predictions
+final_priority
+final_sentiment
+final_queue_recommendation
 policy_source
+policy_context
 policy_suggested_queue
 policy_suggested_action
 generation_mode
 generated_reply
+llm_error
 ```
 
 Output files:
@@ -325,6 +364,7 @@ Output files:
 notebooks/08_reply_generation.ipynb
 src/generate_reply.py
 reports/generated_reply_examples.csv
+reports/generated_reply_examples_multilingual.csv
 ```
 
 ---
@@ -339,7 +379,7 @@ Default behavior:
 use_llm=False
 ```
 
-This uses the free, local, policy-led template reply.
+This uses the free, local, policy-led / intent-led template reply.
 
 Optional behavior:
 
@@ -365,6 +405,36 @@ Important:
 ```text
 ChatGPT subscription and OpenAI API billing are separate.
 An API key alone does not guarantee usable quota.
+```
+
+---
+
+### 9. FastAPI Backend
+
+The project includes a local FastAPI backend for running the full copilot pipeline through an API.
+
+API files:
+
+```text
+api/main.py
+```
+
+Main endpoints:
+
+```text
+GET /
+GET /health
+POST /analyze-ticket
+```
+
+The backend exposes:
+
+```text
+Intent router
+ML metadata predictions
+Conditional RAG retrieval
+Policy-led / intent-led reply generation
+Optional LLM mode
 ```
 
 ---
@@ -402,6 +472,14 @@ priority
 
 `answer` is excluded because it is post-resolution information and would cause data leakage.
 
+The intent router uses a smaller custom dataset:
+
+```text
+data/processed/intent_router_dataset.csv
+```
+
+This dataset contains English and German examples for support-policy and non-support workflows.
+
 ---
 
 ## Preprocessing
@@ -416,6 +494,14 @@ Text preprocessing includes:
 - avoiding aggressive English-only cleaning for multilingual ticket models
 
 For the external Amazon sentiment dataset, review text was cleaned separately for English sentiment classification.
+
+The intent router uses:
+
+```text
+Word TF-IDF + Character TF-IDF + Logistic Regression
+```
+
+Character TF-IDF helps with German word variations.
 
 ---
 
@@ -433,6 +519,10 @@ For sentiment analysis:
 - TF-IDF + Logistic Regression
 - TF-IDF + LinearSVC
 
+For intent routing:
+
+- Word TF-IDF + Character TF-IDF + Logistic Regression
+
 For RAG retrieval:
 
 - Sentence Transformer embeddings
@@ -444,13 +534,13 @@ Final selected components:
 
 ```text
 Ticket Type Classifier  : TF-IDF + LinearSVC/GridSearchCV
-Ticket Type Classifier  : TF-IDF + LinearSVC/GridSearchCV
 Ticket Queue Classifier : TF-IDF + LinearSVC/GridSearchCV
 Priority Classifier     : TF-IDF-based best classifier
 Sentiment Analyzer      : TF-IDF + Logistic Regression + German rule fallback
 Intent Router           : Word + Character TF-IDF + Logistic Regression
 RAG Retriever           : Multilingual Sentence Transformers + FAISS
 Reply Generator         : Policy-led / intent-led template generation + optional LLM mode
+API Backend             : FastAPI
 ```
 
 ---
@@ -468,7 +558,9 @@ Metrics used:
 - Wrong prediction analysis
 - Language-wise evaluation
 - RAG retrieval test cases
+- Intent router evaluation
 - Generated reply examples
+- FastAPI endpoint validation
 
 ### Queue Classifier Results
 
@@ -487,6 +579,27 @@ Metrics used:
 
 The queue classifier is stronger on English than German. This is documented as a limitation and future improvement area.
 
+### Intent Router Result
+
+The intent router was evaluated on a held-out test split from the custom intent dataset.
+
+```text
+Accuracy   : 0.91
+Macro F1   : 0.91
+Weighted F1: 0.91
+```
+
+Example router tests:
+
+| Ticket | Predicted intent |
+|---|---|
+| `I want to know about laptop Ryzen 5.` | `sales_or_product_inquiry` |
+| `Ich habe den falschen Artikel erhalten und möchte mein Geld zurück.` | `refund_issue` |
+| `Das Paket wird als zugestellt angezeigt, aber ich habe es nicht erhalten.` | `shipping_issue` |
+| `Ich glaube, mein Konto wurde gehackt.` | `account_issue` |
+| `Die App stürzt jedes Mal ab, wenn ich sie öffne.` | `technical_issue` |
+| `Help me.` | `ambiguous` |
+
 ---
 
 ## Example End-to-End Output
@@ -501,12 +614,18 @@ Example internal output:
 
 ```text
 Language: en
+Detected Intent: refund_issue
+RAG Used: true
+Requires Human Review: false
 
 Model Predictions:
 - Type: Incident
 - Queue: Technical Support
 - Priority: high
 - Sentiment: negative
+
+Final Priority:
+high
 
 Policy Source:
 refund_policy.txt
@@ -529,8 +648,8 @@ Based on your message, we found a relevant company policy related to this issue.
 
 We understand this may need prompt attention, so the support team should review it carefully.
 
-Relevant policy reference:
-For damaged products, customers may choose either a refund or replacement.
+Policy-guided note:
+The support team will review refund eligibility and may ask for proof of purchase. For damaged products, a refund or replacement may be available depending on policy conditions.
 
 Recommended next step:
 Please keep your order details, product information, screenshots, or proof of purchase available if required by the support team.
@@ -547,6 +666,9 @@ Notice that raw model labels are kept internally instead of being exposed direct
 
 ```text
 customer-support-copilot/
+├── api/
+│   └── main.py
+│
 ├── data/
 │   ├── raw/
 │   └── processed/
@@ -556,7 +678,8 @@ customer-support-copilot/
 │       ├── queue_mapping.csv
 │       ├── sentiment_clean.csv
 │       ├── sentiment_train.csv
-│       └── sentiment_test.csv
+│       ├── sentiment_test.csv
+│       └── intent_router_dataset.csv
 │
 ├── docs/
 │   └── company_policies/
@@ -573,8 +696,13 @@ customer-support-copilot/
 │   ├── 04_queue_classifier.ipynb
 │   ├── 05_priority_classifier.ipynb
 │   ├── 06_sentiment_analysis.ipynb
-│   ├── 07_rag_retrieval.ipynb
-│   └── 08_reply_generation.ipynb
+│   ├── 07_rag_knowledge_retrieval.ipynb
+│   ├── 08_reply_generation.ipynb
+│   └── 09_intent_router.ipynb
+│
+├── scripts/
+│   ├── test_fastapi_outputs.py
+│   └── summarize_fastapi_outputs.py
 │
 ├── src/
 │   ├── predict_ticket.py
@@ -603,7 +731,10 @@ customer-support-copilot/
 │   ├── ticket_sentiment_predictions.csv
 │   ├── rag_test_results.csv
 │   ├── rag_multilingual_test_results.csv
-│   └── generated_reply_examples.csv
+│   ├── generated_reply_examples.csv
+│   ├── generated_reply_examples_multilingual.csv
+│   ├── fastapi_test_outputs.json
+│   └── fastapi_test_summary.csv
 │
 ├── README.md
 ├── requirements.txt
@@ -638,7 +769,7 @@ jupyter notebook
 Then execute:
 
 ```text
-notebooks/07_rag_retrieval.ipynb
+notebooks/07_rag_knowledge_retrieval.ipynb
 ```
 
 This creates:
@@ -667,13 +798,108 @@ If missing, run:
 notebooks/09_intent_router.ipynb
 ```
 
-### 6. Run full reply generation
+### 6. Run full reply generation locally
 
 ```bash
 python src/generate_reply.py
 ```
 
-### 6. Optional LLM mode
+### 7. Run FastAPI backend
+
+```bash
+uvicorn api.main:app --reload
+```
+
+The API runs at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger UI:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+### 8. Health check
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Expected response:
+
+```json
+{
+  "status": "ok",
+  "service": "customer-support-copilot"
+}
+```
+
+### 9. Analyze a ticket through API
+
+Endpoint:
+
+```text
+POST /analyze-ticket
+```
+
+Example request:
+
+```json
+{
+  "ticket_text": "My laptop arrived damaged and I want a refund.",
+  "use_llm": false
+}
+```
+
+Example response fields:
+
+```text
+ticket
+language
+detected_intent
+intent_confidence
+intent_router_source
+rag_used
+requires_human_review
+model_predictions
+final_priority
+final_sentiment
+final_queue_recommendation
+policy_source
+policy_context
+policy_suggested_queue
+policy_suggested_action
+generation_mode
+generated_reply
+llm_error
+```
+
+### 10. Save FastAPI validation outputs
+
+Run the API first:
+
+```bash
+uvicorn api.main:app --reload
+```
+
+Then in another terminal:
+
+```bash
+python scripts/test_fastapi_outputs.py
+python scripts/summarize_fastapi_outputs.py
+```
+
+Expected reports:
+
+```text
+reports/fastapi_test_outputs.json
+reports/fastapi_test_summary.csv
+```
+
+### 11. Optional LLM mode
 
 Create `.env` in the project root:
 
@@ -704,7 +930,9 @@ If quota or billing is unavailable, the system falls back to template mode.
 - German tickets can retrieve English policy documents through multilingual embeddings, but the knowledge base is not fully bilingual yet.
 - LLM reply generation is implemented but requires valid API quota/billing.
 - The current RAG policy base is small and manually created.
-- FastAPI is implemented locally, but the dashboard and deployment are not yet complete.
+- Intent router dataset is small and partially synthetic, so new real failure cases should be added over time.
+- FastAPI is implemented locally but not deployed yet.
+- Dashboard and cloud deployment are not yet complete.
 
 ---
 
@@ -712,13 +940,15 @@ If quota or billing is unavailable, the system falls back to template mode.
 
 Planned next modules and upgrades:
 
-- FastAPI backend
 - Streamlit dashboard
 - Cloud deployment
 - Larger multilingual policy knowledge base
 - German policy documents
 - Better German sentiment model using German or multilingual sentiment data
-- Multilingual transformer upgrade using `distilbert-base-multilingual-cased` or `xlm-roberta-base`
+- Improve German queue classification
+- Expand intent router dataset with real failed examples
+- Add RAG relevance thresholding
+- Reduce duplicate policy chunks in API response
 - Optional OpenAI/LLM-powered response generation in production mode
 - Human approval workflow before sending generated replies
 - Model monitoring and feedback loop from support agent corrections
@@ -732,7 +962,15 @@ Phase 8B: Final FastAPI validation
 Phase 9: Streamlit Dashboard
 ```
 
-The next goal is to expose the working ML + RAG + reply-generation pipeline through an API endpoint.
+Immediate tasks:
+
+```text
+1. Test /health endpoint.
+2. Test /analyze-ticket with mixed English/German cases.
+3. Save example API outputs in reports/.
+4. Commit and push FastAPI + intent router changes.
+5. Start Streamlit dashboard.
+```
 
 FastAPI endpoint:
 
@@ -740,25 +978,29 @@ FastAPI endpoint:
 POST /analyze-ticket
 ```
 
-Expected response:
+Example response:
 
 ```json
 {
-  "ticket": "...",
+  "ticket": "My laptop arrived damaged and I want a refund.",
   "language": "en",
   "detected_intent": "refund_issue",
   "intent_confidence": 0.92,
+  "intent_router_source": "model",
   "rag_used": true,
   "requires_human_review": false,
   "model_predictions": {
-    "ticket_type": "...",
-    "queue": "...",
-    "priority": "...",
-    "sentiment": "..."
+    "ticket_type": "Incident",
+    "queue": "Technical Support",
+    "priority": "high",
+    "sentiment": "negative"
   },
+  "final_priority": "high",
+  "final_sentiment": "negative",
+  "final_queue_recommendation": "Billing or Customer Support",
   "policy_source": "refund_policy.txt",
   "policy_suggested_queue": "Billing or Customer Support",
   "generation_mode": "template",
-  "generated_reply": "..."
+  "generated_reply": "Dear Customer..."
 }
 ```
