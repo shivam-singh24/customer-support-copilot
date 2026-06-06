@@ -9,16 +9,22 @@ The system analyzes a customer ticket, predicts operational metadata, retrieves 
 ```text
 Customer ticket
       ↓
+Intent router
+- support-policy issue
+- sales/product inquiry
+- positive feedback
+- ambiguous/general inquiry
+      ↓
 ML predictions
 - ticket type
 - support queue
 - priority
 - sentiment
       ↓
-Multilingual RAG retrieval
-- relevant company policy
+Conditional multilingual RAG retrieval
+- runs only for support-policy issues
       ↓
-Policy-led reply generation
+Policy-led or intent-led reply generation
 - template fallback by default
 - optional LLM mode when API quota is available
 ```
@@ -57,7 +63,8 @@ The system is designed as a **decision-support copilot**, not as an unsupervised
 | Phase 7A | Policy-led template reply generation | Completed |
 | Phase 7B | Optional LLM reply generation | Implemented, requires API quota/billing |
 | Phase 7.5 | Multilingual RAG and reply cleanup | Completed |
-| Phase 8 | FastAPI backend | Pending |
+| Phase 8A | Intent router / workflow classifier | Completed |
+| Phase 8B | FastAPI backend | Implemented locally / testing |
 | Phase 9 | Streamlit dashboard | Pending |
 | Phase 10 | Deployment | Pending |
 
@@ -173,7 +180,35 @@ reports/ticket_sentiment_predictions.csv
 
 ---
 
-### 5. Multilingual RAG Knowledge Retrieval
+### 5. Intent Router / Workflow Classifier
+
+A trained intent router now runs before RAG. It decides whether the ticket should use policy retrieval or follow a non-policy workflow.
+
+Intent labels:
+
+```text
+refund_issue
+shipping_issue
+account_issue
+technical_issue
+warranty_issue
+sales_or_product_inquiry
+positive_feedback
+general_inquiry
+ambiguous
+```
+
+Output model:
+
+```text
+models/intent_router.pkl
+```
+
+The router prevents non-support messages like product inquiries or positive feedback from triggering irrelevant RAG retrieval.
+
+---
+
+### 6. Multilingual RAG Knowledge Retrieval
 
 The RAG module retrieves company policy context before reply generation.
 
@@ -249,7 +284,7 @@ reports/rag_multilingual_test_results.csv
 
 ---
 
-### 6. Policy-Led Support Reply Generation
+### 7. Policy-Led Support Reply Generation
 
 The reply generator creates professional, human-reviewable support drafts.
 
@@ -294,7 +329,7 @@ reports/generated_reply_examples.csv
 
 ---
 
-### 7. Optional LLM Reply Generation
+### 8. Optional LLM Reply Generation
 
 LLM-based reply generation is implemented as an optional mode.
 
@@ -409,11 +444,13 @@ Final selected components:
 
 ```text
 Ticket Type Classifier  : TF-IDF + LinearSVC/GridSearchCV
+Ticket Type Classifier  : TF-IDF + LinearSVC/GridSearchCV
 Ticket Queue Classifier : TF-IDF + LinearSVC/GridSearchCV
 Priority Classifier     : TF-IDF-based best classifier
 Sentiment Analyzer      : TF-IDF + Logistic Regression + German rule fallback
+Intent Router           : Word + Character TF-IDF + Logistic Regression
 RAG Retriever           : Multilingual Sentence Transformers + FAISS
-Reply Generator         : Policy-led template generation + optional LLM mode
+Reply Generator         : Policy-led / intent-led template generation + optional LLM mode
 ```
 
 ---
@@ -551,7 +588,8 @@ customer-support-copilot/
 │   ├── ticket_type_baseline.pkl
 │   ├── ticket_queue_baseline.pkl
 │   ├── ticket_priority_baseline.pkl
-│   └── sentiment_model.pkl
+│   ├── sentiment_model.pkl
+│   └── intent_router.pkl
 │
 ├── reports/
 │   ├── type_model_comparison.csv
@@ -615,7 +653,21 @@ vectorstore/faiss_policy_index_multilingual/
 python src/rag_pipeline.py
 ```
 
-### 5. Run full reply generation
+### 5. Train or confirm intent router
+
+Make sure this file exists:
+
+```bash
+ls models/intent_router.pkl
+```
+
+If missing, run:
+
+```text
+notebooks/09_intent_router.ipynb
+```
+
+### 6. Run full reply generation
 
 ```bash
 python src/generate_reply.py
@@ -652,7 +704,7 @@ If quota or billing is unavailable, the system falls back to template mode.
 - German tickets can retrieve English policy documents through multilingual embeddings, but the knowledge base is not fully bilingual yet.
 - LLM reply generation is implemented but requires valid API quota/billing.
 - The current RAG policy base is small and manually created.
-- The system is not yet exposed through an API or dashboard.
+- FastAPI is implemented locally, but the dashboard and deployment are not yet complete.
 
 ---
 
@@ -676,12 +728,13 @@ Planned next modules and upgrades:
 ## Next Milestone
 
 ```text
-Phase 8: FastAPI Backend
+Phase 8B: Final FastAPI validation
+Phase 9: Streamlit Dashboard
 ```
 
 The next goal is to expose the working ML + RAG + reply-generation pipeline through an API endpoint.
 
-Expected endpoint:
+FastAPI endpoint:
 
 ```text
 POST /analyze-ticket
@@ -693,6 +746,10 @@ Expected response:
 {
   "ticket": "...",
   "language": "en",
+  "detected_intent": "refund_issue",
+  "intent_confidence": 0.92,
+  "rag_used": true,
+  "requires_human_review": false,
   "model_predictions": {
     "ticket_type": "...",
     "queue": "...",

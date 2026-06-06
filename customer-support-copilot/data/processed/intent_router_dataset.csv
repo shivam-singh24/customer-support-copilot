@@ -1,0 +1,451 @@
+text,intent
+Können Sie Produktdetails zu dieser Smartwatch senden?,sales_or_product_inquiry
+Bitte teilen Sie Preis und Verfügbarkeit mit.,sales_or_product_inquiry
+The package is lost according to tracking.,shipping_issue
+"Kann ich Serviceunterstützung bekommen, weil meine Garantie noch gültig ist?",warranty_issue
+Mein Login ist blockiert.,account_issue
+"Everything works fine, thanks.",positive_feedback
+Who should I talk to about this?,general_inquiry
+"Das Gerät hatte eine Fehlfunktion, bevor die Garantie abgelaufen ist.",warranty_issue
+Mein Paket fehlt nach dem Versand.,shipping_issue
+Bitte helfen.,ambiguous
+The device performance is poor.,technical_issue
+Ich habe ein beschädigtes Produkt erhalten und möchte eine Rückerstattung.,refund_issue
+Support needed.,ambiguous
+"Bitte helfen Sie mir zu verstehen, was ich als Nächstes tun soll.",general_inquiry
+Ist die Ryzen 7 Version verfügbar?,sales_or_product_inquiry
+Die App ist eingefroren und unbrauchbar.,technical_issue
+Can you tell me the price of Ryzen 5 laptops?.,sales_or_product_inquiry
+I want to return this product because it is defective.,refund_issue
+I want to buy another laptop for my office.,sales_or_product_inquiry
+Nicht sicher.,ambiguous
+My package has not arrived and tracking is not updating. Please assist.,shipping_issue
+The device is not turning on. Please assist.,technical_issue
+Etwas stimmt nicht.,ambiguous
+My product has a manufacturing defect.,warranty_issue
+My laptop is very slow and freezes often.,technical_issue
+Welche Laptop-Spezifikationen sind verfügbar?,sales_or_product_inquiry
+Support bitte.,ambiguous
+Der Akku hat einen Ladefehler und das Produkt ist noch in der Garantie.,warranty_issue
+"Tolles Produkt, alles funktioniert gut.",positive_feedback
+My smartwatch has a hardware failure under warranty.,warranty_issue
+Laptop Problem.,ambiguous
+I want information about the newest laptop.,sales_or_product_inquiry
+I see error code 502 when using the app.,technical_issue
+"Kein Problem, ich wollte mich nur bedanken.",positive_feedback
+Verkaufen Sie Kopfhörer mit Geräuschunterdrückung?,sales_or_product_inquiry
+Ich möchte Informationen über einen Laptop mit Ryzen 5.,sales_or_product_inquiry
+Tracking has not changed for five days. Please assist.,shipping_issue
+The account recovery process failed.,account_issue
+Können Sie mir den Preis für Ryzen 5 Laptops sagen?,sales_or_product_inquiry
+I am very happy with the service.,positive_feedback
+I think my account has been hacked. Please assist.,account_issue
+Welche Modelle sind diesen Monat verfügbar?,sales_or_product_inquiry
+Someone changed my account details without permission.,account_issue
+Can someone contact me about my request?,general_inquiry
+"Ich möchte dieses Produkt zurückgeben, weil es defekt ist.",refund_issue
+Please share price and availability.,sales_or_product_inquiry
+I love this product and wanted to say thanks.,positive_feedback
+My parcel is missing after shipping.,shipping_issue
+I have a question about your service.,general_inquiry
+I need a refund for a defective item I received yesterday.,refund_issue
+Please tell me who can help with my request.,general_inquiry
+I get an error message during installation.,technical_issue
+Help me. Please assist.,ambiguous
+Laptop issue. Please assist.,ambiguous
+Kann mich jemand beraten?,general_inquiry
+The password reset email never arrived.,account_issue
+Can I get service support because my warranty is still valid?,warranty_issue
+"Es steht zugestellt, aber bei mir ist nichts angekommen.",shipping_issue
+The product failed during the warranty period.,warranty_issue
+Die Systemleistung ist extrem langsam.,technical_issue
+Mir wurde falsch berechnet und ich möchte mein Geld zurück.,refund_issue
+I want to check if this is covered by warranty.,warranty_issue
+Can you explain the process?,general_inquiry
+My keyboard stopped working suddenly.,technical_issue
+"No issue, just wanted to thank you.",positive_feedback
+Ich brauche Garantieunterstützung wegen eines Hardwarefehlers.,warranty_issue
+Something happened.,ambiguous
+Problem here. Please assist.,ambiguous
+I want to buy another laptop for my office. Please assist.,sales_or_product_inquiry
+Meine Lieferung ist wieder verspätet.,shipping_issue
+"Great product, everything is working well.",positive_feedback
+Jemand hat meine Kontodaten ohne Erlaubnis geändert.,account_issue
+Der Akku meines Tablet entlädt sich sehr schnell.,technical_issue
+Die Trackingnummer zeigt keine Informationen.,shipping_issue
+The device stopped working while still covered by warranty.,warranty_issue
+Der Bildschirm reagiert nicht.,technical_issue
+I want refund support because the product arrived broken.,refund_issue
+Not good.,ambiguous
+"Kann Ihr Team mir sagen, was ich tun soll?",general_inquiry
+Die Sendungsverfolgung hat sich seit fünf Tagen nicht geändert.,shipping_issue
+The order is stuck in transit.,shipping_issue
+Ich habe eine allgemeine Frage an das Support-Team.,general_inquiry
+I need general support information.,general_inquiry
+Ich brauche Hilfe bei verspätetem Versand.,shipping_issue
+Tracking says delivered but the product is missing.,shipping_issue
+The monitor was damaged when delivered and I need replacement or refund.,refund_issue
+Kann Ihr Team meine Anfrage prüfen?,general_inquiry
+The product works great and I am happy with it. Please assist.,positive_feedback
+The package says delivered but I never received it.,shipping_issue
+Bitte antworten.,ambiguous
+"Ich möchte noch einen Laptop, weil meiner gut funktioniert.",sales_or_product_inquiry
+Ich habe mein Passwort vergessen und brauche Kontowiederherstellung.,account_issue
+The device performs well.,positive_feedback
+Das Produkt verbindet und trennt sich immer wieder.,technical_issue
+Brauche jetzt Hilfe.,ambiguous
+I was charged incorrectly and want my money returned.,refund_issue
+Ich brauche Unterstützung.,ambiguous
+Need help please.,ambiguous
+"Ich brauche Service, weil die Garantie gültig ist.",warranty_issue
+Mein Gerät funktioniert nach dem Update perfekt.,positive_feedback
+I got a defective headphones and need a refund.,refund_issue
+"Mein Laptop funktioniert sehr gut, danke.",positive_feedback
+The product connects and disconnects repeatedly.,technical_issue
+"Ich brauche Orientierung, wohin ich meine Frage senden soll.",general_inquiry
+I need help with account access and email change.,account_issue
+Ich möchte einen weiteren Laptop für mein Büro kaufen.,sales_or_product_inquiry
+I am not sure which department to contact.,general_inquiry
+Can I purchase another charger from your store?,sales_or_product_inquiry
+Can your team tell me what to do?,general_inquiry
+"Ich glaube, mein Konto wurde gehackt.",account_issue
+Bestellproblem.,ambiguous
+Ich habe eine allgemeine Frage.,general_inquiry
+Mit wem sollte ich darüber sprechen?,general_inquiry
+Ich muss die E-Mail-Adresse in meinem Konto ändern.,account_issue
+I cannot login to my account and password reset is not working.,account_issue
+I want a replacement or refund for a damaged product.,refund_issue
+This is urgent.,ambiguous
+Thanks for the excellent service.,positive_feedback
+Your support solved everything.,positive_feedback
+Das Produkt zeigt wiederholt Fehlermeldungen.,technical_issue
+Die App-Installation wird nicht abgeschlossen.,technical_issue
+In meiner Bestellung war der falsche Artikel. Ich möchte eine Erstattung.,refund_issue
+I need assistance.,ambiguous
+Can your team review my request?,general_inquiry
+Ich liebe dieses Produkt und wollte Danke sagen.,positive_feedback
+Kann die Garantie die Reparatur dieses Defekts abdecken?,warranty_issue
+My account might be compromised.,account_issue
+I am interested in buying a new tablet.,sales_or_product_inquiry
+Die Installation schlägt immer mit einem Fehler fehl.,technical_issue
+I need to change the email address on my account.,account_issue
+My delivery address was entered wrong.,shipping_issue
+I am satisfied with the replacement product.,positive_feedback
+My device has a manufacturing fault under warranty.,warranty_issue
+Can you tell me the price of Ryzen 5 laptops?,sales_or_product_inquiry
+Something is wrong.,ambiguous
+My password reset link does not work.,account_issue
+Please respond.,ambiguous
+Bitte kontaktieren Sie mich wegen meiner Frage.,general_inquiry
+Das Produkt ist während der Garantiezeit ausgefallen.,warranty_issue
+"My laptop is working excellently, thank you. Please assist.",positive_feedback
+I suspect my account is compromised.,account_issue
+Ich habe beschädigte Ware erhalten und brauche Erstattungshilfe.,refund_issue
+Kann Sales mir bei der Produktauswahl helfen?,sales_or_product_inquiry
+The app keeps crashing whenever I open it. Please assist.,technical_issue
+Ich brauche Beratung vom Kundendienst.,general_inquiry
+The monitor stopped charging within the warranty period.,warranty_issue
+Ich möchte ein weiteres Gerät kaufen.,sales_or_product_inquiry
+Mein Tablet ist defekt angekommen und ich möchte eine Rückerstattung.,refund_issue
+Die falsche Farbe wurde geliefert und ich möchte mein Geld zurück.,refund_issue
+The app is frozen and unusable.,technical_issue
+Ich brauche Hilfe beim Entsperren meines Kontos.,account_issue
+Bitte helfen Sie mir beim Kauf eines Laptops zum Programmieren.,sales_or_product_inquiry
+Mein Tastatur funktioniert plötzlich nicht mehr.,technical_issue
+My account recovery link expired.,account_issue
+"Erstatten Sie meine Zahlung, weil der Artikel falsch ist.",refund_issue
+The screen does not respond.,technical_issue
+My charger stopped working within the warranty period.,warranty_issue
+Ich brauche Produktinformationen vor dem Kauf.,sales_or_product_inquiry
+"Ich bin unsicher, wie ich vorgehen soll.",general_inquiry
+The product arrived in poor condition and I want to return it.,refund_issue
+Something is wrong. Please assist.,ambiguous
+Can someone guide me?,general_inquiry
+Das Tastatur wurde beschädigt geliefert und ich möchte Ersatz oder Rückerstattung.,refund_issue
+The wrong color product was delivered and I want my money back.,refund_issue
+"Bitte sagen Sie mir, wer bei meiner Anfrage helfen kann.",general_inquiry
+"Ich vermute, mein Konto ist kompromittiert.",account_issue
+The product failed after six months of normal use.,warranty_issue
+Ich sehe Fehlercode 502 bei der Nutzung der App.,technical_issue
+The system performance is extremely slow.,technical_issue
+Deckt die Garantie Akku- oder Ladeprobleme ab?,warranty_issue
+"Das Tracking sagt zugestellt, aber das Produkt fehlt.",shipping_issue
+Tracking has not changed for five days.,shipping_issue
+The software failed after the latest update.,technical_issue
+Problem.,ambiguous
+Der Kurier hat mein Paket während des Transports verloren.,shipping_issue
+"Der gelieferte Artikel ist nicht der, den ich bestellt habe.",refund_issue
+My device keeps disconnecting.,technical_issue
+The delivery was smooth and the product is excellent.,positive_feedback
+Which laptop do you recommend for office work?,sales_or_product_inquiry
+Is this defect covered under the one year warranty?,warranty_issue
+Ich schätze die schnelle Hilfe.,positive_feedback
+Das Produkt kam in schlechtem Zustand an und ich möchte es zurückgeben.,refund_issue
+I appreciate the quick support.,positive_feedback
+Mein Ladegerät funktioniert innerhalb der Garantiezeit nicht mehr.,warranty_issue
+Mein Konto könnte kompromittiert sein.,account_issue
+Mein Monitor ist sehr langsam und friert oft ein.,technical_issue
+Please help me understand what to do next.,general_inquiry
+Problem hier.,ambiguous
+Das Gerät lässt sich nicht einschalten.,technical_issue
+Bluetooth connectivity is not working.,technical_issue
+"Meine Bestellung sollte letzte Woche ankommen, ist aber nicht angekommen.",shipping_issue
+The product shows repeated error messages.,technical_issue
+Mein Link zum Zurücksetzen des Passworts funktioniert nicht.,account_issue
+Ihr Support hat alles gelöst.,positive_feedback
+"Ich habe eine Frage, aber noch kein konkretes Problem.",general_inquiry
+Die Sendung steckt fest und das Tracking bewegt sich nicht.,shipping_issue
+I need help with delayed shipping.,shipping_issue
+My order should have arrived last week but did not.,shipping_issue
+Is this defect covered under the one year warranty?.,warranty_issue
+Die Bestellung steckt im Transport fest.,shipping_issue
+Mein Smartwatch hat einen Hardwarefehler innerhalb der Garantie.,warranty_issue
+Tell me about laptop specifications and availability.,sales_or_product_inquiry
+Ich brauche Hilfe beim Kontozugriff und bei der E-Mail-Änderung.,account_issue
+Need support.,ambiguous
+Ich kann meine E-Mail-Adresse nicht aktualisieren.,account_issue
+I want to claim warranty for this defective product.,warranty_issue
+Can you share product details for this smartwatch?,sales_or_product_inquiry
+Is this laptop available in black color?.,sales_or_product_inquiry
+I need guidance about where to send my question.,general_inquiry
+The product failed during normal use and is under warranty.,warranty_issue
+I was charged twice for my order. Please refund the duplicate payment.,refund_issue
+Das Produkt entspricht nicht der Beschreibung und ich möchte es zurückgeben.,refund_issue
+The app installation does not complete.,technical_issue
+Need help now.,ambiguous
+The product quality is very good.,positive_feedback
+"Ich brauche Hilfe, weil mein Paket verspätet ist.",shipping_issue
+Bitte leiten Sie mich an die richtige Abteilung weiter.,general_inquiry
+I need help understanding the next steps.,general_inquiry
+Bitte bearbeiten Sie eine Rückerstattung für den kaputten Artikel.,refund_issue
+I have a question about your service. Please assist.,general_inquiry
+I am happy with the delivery and product.,positive_feedback
+Nicht gut.,ambiguous
+Can I claim warranty for a charging defect?,warranty_issue
+Die Software stürzt nach dem Start ab.,technical_issue
+Die Bluetooth-Verbindung funktioniert nicht.,technical_issue
+My order is delayed and there is no tracking update.,shipping_issue
+"Das Paket wird als zugestellt angezeigt, aber ich habe es nicht erhalten.",shipping_issue
+Urgent help needed.,ambiguous
+Die Kontowiederherstellung ist fehlgeschlagen.,account_issue
+The login verification failed.,account_issue
+I forgot my password and need account recovery. Please assist.,account_issue
+Ich bekomme bei der Installation eine Fehlermeldung.,technical_issue
+I cannot sign in even with the correct password.,account_issue
+Need support. Please assist.,ambiguous
+My screen keeps flickering.,technical_issue
+"No complaint, just thanks.",positive_feedback
+I need product information before buying.,sales_or_product_inquiry
+My account is locked and I cannot access it. Please assist.,account_issue
+The delivery address was incorrect on my order.,shipping_issue
+Die Login-Verifizierung ist fehlgeschlagen.,account_issue
+Das Monitor lädt innerhalb der Garantiezeit nicht mehr.,warranty_issue
+Kann ich Garantie für einen Ladefehler beanspruchen?,warranty_issue
+I want to compare Ryzen and Intel laptops.,sales_or_product_inquiry
+I forgot my password and need account recovery.,account_issue
+The tracking number shows no information.,shipping_issue
+Your team was helpful and polite.,positive_feedback
+Die App zeigt beim Einloggen einen Serverfehler.,technical_issue
+Ist dieser Laptop in Schwarz verfügbar?,sales_or_product_inquiry
+Help me.,ambiguous
+Mir wurde die Bestellung doppelt berechnet und ich möchte eine Erstattung.,refund_issue
+What models are available this month?,sales_or_product_inquiry
+Das Produkt ist nach sechs Monaten normaler Nutzung ausgefallen.,warranty_issue
+Der Artikel war bei Lieferung beschädigt. Kann ich mein Geld zurückbekommen?,refund_issue
+My login is blocked.,account_issue
+Ich brauche Ersatz innerhalb der Garantie.,warranty_issue
+I need help understanding the next steps. Please assist.,general_inquiry
+It is bad.,ambiguous
+I need replacement under warranty.,warranty_issue
+Ich möchte Ryzen- und Intel-Laptops vergleichen.,sales_or_product_inquiry
+Do you sell headphones with noise cancellation?,sales_or_product_inquiry
+The installation keeps failing with an error.,technical_issue
+I am unsure how to proceed.,general_inquiry
+I have a general question.,general_inquiry
+I cannot verify my login email.,account_issue
+My phone battery drains very quickly.,technical_issue
+"My laptop is working excellently, thank you.",positive_feedback
+Das Paket könnte verloren sein. Bitte prüfen Sie den Kurierstatus.,shipping_issue
+My smartwatch has a hardware failure under warranty. Please assist.,warranty_issue
+I want to know about laptop Ryzen 5. Please assist.,sales_or_product_inquiry
+I cannot login to my account and password reset is not working. Please assist.,account_issue
+Support please.,ambiguous
+Ich habe eine Frage zu Ihrem Service.,general_inquiry
+I get an error message during installation. Please assist.,technical_issue
+Order issue.,ambiguous
+My battery runs out too fast.,technical_issue
+Kann mich jemand wegen meiner Anfrage kontaktieren?,general_inquiry
+Die Produktqualität ist sehr gut.,positive_feedback
+Can I get repair or replacement under warranty?,warranty_issue
+"Danke, dass Sie mein Problem gelöst haben.",positive_feedback
+My charger stopped working within the warranty period. Please assist.,warranty_issue
+Die Leistung des Laptops ist ausgezeichnet.,positive_feedback
+"Vielen Dank, ich bin mit dem Produkt zufrieden.",positive_feedback
+Das Paket hat mich nie erreicht.,shipping_issue
+Ich brauche Hilfe.,ambiguous
+I received the wrong item and want my money back. Please assist.,refund_issue
+My order had the wrong product inside. I want a refund.,refund_issue
+Ich bin sehr zufrieden mit dem Service.,positive_feedback
+Ich habe zweimal für dieselbe Bestellung bezahlt und möchte eine Erstattung.,refund_issue
+My device works perfectly after the update.,positive_feedback
+Ich brauche Hilfe bei den nächsten Schritten.,general_inquiry
+Ich möchte Garantie für dieses defekte Produkt beanspruchen.,warranty_issue
+The item delivered is not what I ordered.,refund_issue
+"Thank you, I am satisfied with the product.",positive_feedback
+I need service because the warranty is valid.,warranty_issue
+I want to know how customer support works. Please assist.,general_inquiry
+Das Paket ist laut Tracking verloren.,shipping_issue
+Can someone contact me about my request?.,general_inquiry
+Die Lieferung ist spät und ich brauche Hilfe.,shipping_issue
+Das Produkt ist bei normaler Nutzung ausgefallen und hat noch Garantie.,warranty_issue
+Dringend Hilfe nötig.,ambiguous
+Das Produkt funktioniert gut und ich bin zufrieden.,positive_feedback
+My order is delayed and there is no tracking update. Please assist.,shipping_issue
+Die Anmeldeseite lehnt meine Zugangsdaten ab.,account_issue
+My order went to the wrong delivery address.,shipping_issue
+"Keine Beschwerde, nur Danke.",positive_feedback
+The device malfunctioned before the warranty expired.,warranty_issue
+Please process a refund for the broken item.,refund_issue
+My package has not arrived and tracking is not updating.,shipping_issue
+Ich brauche eine Rückerstattung für einen defekten Artikel.,refund_issue
+Issue.,ambiguous
+Does warranty cover battery or charging problems?,warranty_issue
+I have a question but no specific issue yet.,general_inquiry
+The software crashes after startup.,technical_issue
+Kann ich eine Reparatur oder Ersatz innerhalb der Garantie bekommen?,warranty_issue
+The product does not match the description and I want a return. Please assist.,refund_issue
+I was charged twice for my order Please refund the duplicate payment.,refund_issue
+The package says delivered but I never received it. Please assist.,shipping_issue
+I need warranty support for a hardware failure.,warranty_issue
+Laptop issue.,ambiguous
+Meine Profilinformationen sind falsch und ich kann sie nicht ändern.,account_issue
+The warranty should cover this hardware failure.,warranty_issue
+Ich möchte Informationen über den neuesten Laptop.,sales_or_product_inquiry
+Can sales help me choose a product?,sales_or_product_inquiry
+Meine Lieferung ist verspätet und es gibt kein Tracking-Update.,shipping_issue
+I need information about your support process.,general_inquiry
+My profile information is wrong and I cannot update it.,account_issue
+Ich brauche Informationen über Ihren Support-Prozess.,general_inquiry
+I need help unlocking my account.,account_issue
+Die E-Mail zum Zurücksetzen des Passworts ist nie angekommen.,account_issue
+Please guide me to buy a laptop for programming.,sales_or_product_inquiry
+Device problem.,ambiguous
+Die Software funktioniert nach dem letzten Update nicht mehr.,technical_issue
+Ich habe den falschen Artikel erhalten und möchte mein Geld zurück.,refund_issue
+The product was defective and I want to return it.,refund_issue
+Das Gerät funktioniert gut.,positive_feedback
+I need my money back for a wrong delivery.,refund_issue
+Die Lieferung war problemlos und das Produkt ist ausgezeichnet.,positive_feedback
+I received a damaged package and need refund support.,refund_issue
+The product does not match the description and I want a return.,refund_issue
+The login page keeps rejecting my credentials.,account_issue
+I have a general question for the support team.,general_inquiry
+Mein Konto ist gesperrt und ich kann nicht darauf zugreifen.,account_issue
+Es ist schlecht.,ambiguous
+The product works great and I am happy with it.,positive_feedback
+I paid twice for the same order and need the extra charge refunded.,refund_issue
+Mein Bildschirm flackert ständig.,technical_issue
+Anliegen.,ambiguous
+Ich kann mich nicht in mein Konto einloggen und das Zurücksetzen des Passworts funktioniert nicht.,account_issue
+Ich kann meine Login-E-Mail nicht bestätigen.,account_issue
+I need help because my package is delayed.,shipping_issue
+Can warranty cover repair for this defect?,warranty_issue
+Is the Ryzen 7 version available?,sales_or_product_inquiry
+"Das Gerät funktioniert nicht mehr, obwohl es noch Garantie hat.",warranty_issue
+Please contact me about my question.,general_inquiry
+"Alles funktioniert gut, danke.",positive_feedback
+Danke für den ausgezeichneten Service.,positive_feedback
+The battery has a charging defect and the product is still under warranty.,warranty_issue
+The device overheats during normal use.,technical_issue
+My account is locked and I cannot access it.,account_issue
+I want to know how customer support works.,general_inquiry
+Kann jemand meine Nachricht prüfen?,general_inquiry
+Please help me recover my locked account.,account_issue
+Support nötig.,ambiguous
+Thanks for resolving my issue.,positive_feedback
+Das ist dringend.,ambiguous
+Jemand hat ohne Erlaubnis auf mein Profil zugegriffen.,account_issue
+The parcel never reached me.,shipping_issue
+Can I get details about laptop models?,sales_or_product_inquiry
+Die Garantie sollte diesen Hardwarefehler abdecken.,warranty_issue
+Ich bin mit Lieferung und Produkt zufrieden.,positive_feedback
+Meine Bestellung ist noch nicht angekommen und die Sendungsverfolgung aktualisiert sich nicht.,shipping_issue
+The package may be lost. Please check the courier status.,shipping_issue
+Ich interessiere mich für den Kauf eines neuen Tablets.,sales_or_product_inquiry
+Das Produkt war defekt und ich möchte es zurückgeben.,refund_issue
+The product failed after six months of normal use. Please assist.,warranty_issue
+"Ich bin nicht sicher, welche Abteilung ich kontaktieren soll.",general_inquiry
+Ich möchte Ersatz oder Rückerstattung für ein beschädigtes Produkt.,refund_issue
+Refund my payment because the item is wrong.,refund_issue
+I want to purchase one more device.,sales_or_product_inquiry
+"Bitte helfen Sie mir, mein gesperrtes Konto wiederherzustellen.",account_issue
+"Ich möchte eine Erstattung, weil das Produkt beschädigt angekommen ist.",refund_issue
+Ich kann mich trotz richtigem Passwort nicht anmelden.,account_issue
+The app shows a server error when I login.,technical_issue
+Mein Gerät trennt ständig die Verbindung.,technical_issue
+Hilfe bitte.,ambiguous
+Please refund me because I received an incorrect item.,refund_issue
+I want to know about laptop Ryzen 5.,sales_or_product_inquiry
+"Die App stürzt jedes Mal ab, wenn ich sie öffne.",technical_issue
+Everything is fine now and I appreciate the help.,positive_feedback
+My phone arrived damaged and I want a refund.,refund_issue
+Haben Sie Intel i5 Modelle verfügbar?,sales_or_product_inquiry
+Kann ich ein weiteres Ladegerät in Ihrem Shop kaufen?,sales_or_product_inquiry
+Mein Versandstatus wurde nicht aktualisiert.,shipping_issue
+Bitte prüfen.,ambiguous
+Die Geräteleistung ist schlecht.,technical_issue
+Not sure.,ambiguous
+I think my account has been hacked.,account_issue
+The laptop performance is excellent.,positive_feedback
+Problem here.,ambiguous
+Ich bin mit dem Ersatzprodukt zufrieden.,positive_feedback
+The device is not turning on.,technical_issue
+"Das Support-Team hat mir schnell geholfen, danke.",positive_feedback
+The courier lost my package during transit.,shipping_issue
+What is the cost of this monitor?,sales_or_product_inquiry
+Meine Lieferadresse wurde falsch eingegeben.,shipping_issue
+Can someone review my message?,general_inquiry
+Do you have Intel i5 models available?,sales_or_product_inquiry
+Someone accessed my profile without permission.,account_issue
+"Ich möchte wissen, wie der Kundensupport funktioniert.",general_inquiry
+Geräteproblem.,ambiguous
+I received the wrong item and want my money back.,refund_issue
+"Ich möchte prüfen, ob dies von der Garantie abgedeckt ist.",warranty_issue
+The courier status has not updated.,shipping_issue
+Mein Produkt hat einen Herstellungsfehler.,warranty_issue
+The app keeps crashing whenever I open it.,technical_issue
+The shipment is stuck and tracking is not moving.,shipping_issue
+Das Gerät überhitzt bei normaler Nutzung.,technical_issue
+Ihr Team war hilfsbereit und freundlich.,positive_feedback
+Ich brauche allgemeine Support-Informationen.,general_inquiry
+I cannot update my email address.,account_issue
+I need guidance from customer service.,general_inquiry
+Was kostet dieser Monitor?,sales_or_product_inquiry
+"Great product, everything is working well. Please assist.",positive_feedback
+It says delivered but nothing came to my house.,shipping_issue
+Können Sie den Prozess erklären?,general_inquiry
+Check this.,ambiguous
+The item was broken on arrival. Can I get my money back?,refund_issue
+Kann ich Details zu Laptopmodellen bekommen?,sales_or_product_inquiry
+Mein Link zur Kontowiederherstellung ist abgelaufen.,account_issue
+Welchen Laptop empfehlen Sie für Büroarbeit?,sales_or_product_inquiry
+Mein Gerät hat einen Herstellungsfehler innerhalb der Garantie.,warranty_issue
+Brauche Hilfe bitte.,ambiguous
+Mein Akku ist zu schnell leer.,technical_issue
+My phone battery drains very quickly. Please assist.,technical_issue
+Ich brauche mein Geld zurück für eine falsche Lieferung.,refund_issue
+"The support team helped me quickly, thank you.",positive_feedback
+Ist dieser Defekt durch die einjährige Garantie abgedeckt?,warranty_issue
+"Thank you, I am satisfied with the product. Please assist.",positive_feedback
+Please help.,ambiguous
+My shipment is delayed again.,shipping_issue
+Jetzt ist alles in Ordnung und ich schätze die Hilfe.,positive_feedback
+Die Lieferadresse in meiner Bestellung war falsch.,shipping_issue
+The delivery is late and I need help.,shipping_issue
+Etwas ist passiert.,ambiguous
+"Bitte erstatten Sie mir den Betrag, weil der falsche Artikel geliefert wurde.",refund_issue
+Please guide me to the right department.,general_inquiry
+My phone arrived damaged and I want a refund. Please assist.,refund_issue
+Is this laptop available in black color?,sales_or_product_inquiry
+I want one more laptop because mine works well.,sales_or_product_inquiry
+Meine Bestellung wurde an die falsche Lieferadresse geschickt.,shipping_issue
