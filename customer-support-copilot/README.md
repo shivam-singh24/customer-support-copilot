@@ -734,9 +734,11 @@ customer-support-copilot/
 │   │   ├── account_policy.txt
 │   │   └── technical_support_policy.txt
 │   └── screenshots/
-│       ├── streamlit_english_ticket.png
-│       ├── streamlit_english_policy_context.png
-│       └── streamlit_german_ticket.png
+│       ├── streamlit_english_ticket_01_summary.png
+│       ├── streamlit_english_ticket_02_policy.png
+│       ├── streamlit_english_ticket_03_reply.png
+│       ├── streamlit_german_ticket_01_summary.png
+│       └── streamlit_german_ticket_02_reply.png
 │
 ├── notebooks/
 │   ├── 01_data_exploration.ipynb
@@ -785,6 +787,8 @@ customer-support-copilot/
 │   ├── fastapi_test_outputs.json
 │   └── fastapi_test_summary.csv
 │
+├── render.yaml
+├── runtime.txt
 ├── README.md
 ├── requirements.txt
 └── .gitignore
@@ -968,10 +972,16 @@ The dashboard runs at:
 http://localhost:8501
 ```
 
-The dashboard calls:
+The dashboard calls the local backend by default:
 
 ```text
 POST http://127.0.0.1:8000/analyze-ticket
+```
+
+For cloud deployment, set the backend URL through Streamlit secrets:
+
+```toml
+API_URL = "https://your-render-api-url.onrender.com"
 ```
 
 ### 12. Optional LLM mode
@@ -992,6 +1002,79 @@ python -c "from src.generate_reply import analyze_ticket_and_generate_reply; r=a
 If quota or billing is unavailable, the system falls back to template mode.
 
 ---
+
+## Deployment Preparation
+
+The project is prepared for a two-service deployment:
+
+| Component | Platform | File / Setting |
+|---|---|---|
+| FastAPI backend | Render | `render.yaml` |
+| Streamlit dashboard | Streamlit Community Cloud | `dashboard/streamlit_app.py` |
+| Python runtime | Render / compatible hosts | `runtime.txt` |
+| Dependencies | Render / Streamlit | `requirements.txt` |
+
+### FastAPI backend deployment
+
+Render should use:
+
+```text
+Build Command:
+pip install -r requirements.txt
+
+Start Command:
+uvicorn api.main:app --host 0.0.0.0 --port $PORT
+```
+
+The API exposes:
+
+```text
+GET /
+GET /health
+POST /analyze-ticket
+```
+
+After backend deployment, verify:
+
+```text
+https://your-render-api-url.onrender.com/health
+https://your-render-api-url.onrender.com/docs
+```
+
+### Streamlit frontend deployment
+
+The Streamlit app file is:
+
+```text
+dashboard/streamlit_app.py
+```
+
+The deployed Streamlit app must be configured with this secret:
+
+```toml
+API_URL = "https://your-render-api-url.onrender.com"
+```
+
+Locally, the dashboard still defaults to:
+
+```text
+http://127.0.0.1:8000
+```
+
+### FAISS vectorstore note
+
+The multilingual FAISS index is small enough for this portfolio deployment.
+
+Required deployed index:
+
+```text
+vectorstore/faiss_policy_index_multilingual/
+├── index.faiss
+└── index.pkl
+```
+
+This folder should be committed so the Render backend can retrieve policies without rebuilding the index during startup.
+
 
 ## Current Limitations
 
@@ -1038,11 +1121,12 @@ Phase 10: Deployment
 Immediate tasks:
 
 ```text
-1. Save final Streamlit screenshots in docs/screenshots/.
-2. Run FastAPI validation scripts and keep reports/fastapi_test_outputs.json plus reports/fastapi_test_summary.csv.
-3. Commit and push the completed FastAPI + Streamlit dashboard stage.
-4. Prepare deployment files for backend/frontend.
-5. Deploy and document live URLs.
+1. Commit the small multilingual FAISS index for deployment.
+2. Commit render.yaml, runtime.txt, and the cloud-ready Streamlit API URL handling.
+3. Deploy the FastAPI backend on Render.
+4. Add the Render API URL as API_URL in Streamlit Community Cloud secrets.
+5. Deploy the Streamlit dashboard.
+6. Add the final live URLs to this README.
 ```
 
 Local backend command:

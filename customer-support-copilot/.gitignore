@@ -17,8 +17,11 @@ venv/
 .streamlit/secrets.toml
 
 # Generated vector indexes
-# Rebuild using the RAG notebook instead of committing binary FAISS artifacts.
-vectorstore/
+# Keep only the small deployment-ready multilingual FAISS index.
+# Other regenerated vector indexes should remain untracked.
+vectorstore/*
+!vectorstore/faiss_policy_index_multilingual/
+!vectorstore/faiss_policy_index_multilingual/**
 
 # Raw datasets can be large/private
 data/raw/

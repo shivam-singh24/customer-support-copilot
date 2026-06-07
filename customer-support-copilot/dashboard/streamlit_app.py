@@ -1,8 +1,29 @@
 import html
+import os
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:8000"
+def get_api_url() -> str:
+    """
+    Resolve backend API URL.
+
+    Local default:
+        http://127.0.0.1:8000
+
+    Cloud deployment:
+        Set API_URL in Streamlit secrets or environment variables.
+    """
+    default_url = os.getenv("API_URL", "http://127.0.0.1:8000")
+
+    try:
+        api_url = st.secrets.get("API_URL", default_url)
+    except Exception:
+        api_url = default_url
+
+    return str(api_url).rstrip("/")
+
+
+API_URL = get_api_url()
 
 
 def safe_text(value):
@@ -90,7 +111,7 @@ if submit:
                 response = requests.post(
                     f"{API_URL}/analyze-ticket",
                     json={"ticket_text": ticket_text},
-                    timeout=30
+                    timeout=60
                 )
 
                 if response.status_code != 200:
@@ -236,7 +257,7 @@ if submit:
             except requests.exceptions.ConnectionError:
                 st.error(
                     "Could not connect to FastAPI. "
-                    "Make sure backend is running on http://127.0.0.1:8000"
+                    f"Make sure backend is running at {API_URL}"
                 )
 
             except requests.exceptions.Timeout:
