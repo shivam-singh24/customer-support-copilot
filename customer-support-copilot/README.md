@@ -38,7 +38,7 @@ Policy-led or intent-led reply generation
 FastAPI backend response
 ```
 
-The project is currently at the **FastAPI validation stage**. The core ML + intent router + multilingual RAG + reply generation pipeline is working locally through a FastAPI backend. The next major milestone is the Streamlit dashboard.
+The project has completed the local **FastAPI + Streamlit validation stage**. The core ML + intent router + multilingual RAG + reply generation pipeline works through a FastAPI backend and is displayed through a Streamlit dashboard. The remaining major milestone is deployment.
 
 ---
 
@@ -74,8 +74,8 @@ The system is designed as a **decision-support copilot**, not as an unsupervised
 | Phase 7B | Optional LLM reply generation | Implemented, requires API quota/billing |
 | Phase 7.5 | Multilingual RAG and reply cleanup | Completed |
 | Phase 8A | Intent router / workflow classifier | Completed |
-| Phase 8B | FastAPI backend | Implemented locally, validation in progress |
-| Phase 9 | Streamlit dashboard | Pending |
+| Phase 8B | FastAPI backend + validation | Completed |
+| Phase 9 | Streamlit dashboard | Completed locally |
 | Phase 10 | Deployment | Pending |
 
 ---
@@ -439,6 +439,47 @@ Optional LLM mode
 
 ---
 
+### 10. Streamlit Dashboard
+
+The project includes a local Streamlit dashboard that connects to the FastAPI backend and displays the full customer-support copilot workflow.
+
+Dashboard file:
+
+```text
+dashboard/streamlit_app.py
+```
+
+The dashboard supports:
+
+```text
+Ticket text input
+Compact prediction summary cards
+Detected intent and intent confidence
+Final queue recommendation
+RAG retrieval status
+Human review flag
+Policy source and policy-guided action
+Expandable retrieved policy context
+Generated support reply
+Expandable raw API response
+```
+
+#### Dashboard screenshots
+
+##### Main dashboard: English ticket summary
+
+![Streamlit English Ticket Summary](docs/screenshots/streamlit_english_ticket_01_summary.png)
+
+##### RAG policy retrieval evidence
+
+![Streamlit English Policy Context](docs/screenshots/streamlit_english_ticket_02_policy.png)
+
+##### German ticket example
+
+![Streamlit German Ticket Summary](docs/screenshots/streamlit_german_ticket_01_summary.png)
+
+---
+
 ## Dataset
 
 The main ticket dataset contains multilingual customer support tickets in **English and German**.
@@ -541,6 +582,7 @@ Intent Router           : Word + Character TF-IDF + Logistic Regression
 RAG Retriever           : Multilingual Sentence Transformers + FAISS
 Reply Generator         : Policy-led / intent-led template generation + optional LLM mode
 API Backend             : FastAPI
+Dashboard               : Streamlit
 ```
 
 ---
@@ -669,6 +711,9 @@ customer-support-copilot/
 ├── api/
 │   └── main.py
 │
+├── dashboard/
+│   └── streamlit_app.py
+│
 ├── data/
 │   ├── raw/
 │   └── processed/
@@ -682,12 +727,16 @@ customer-support-copilot/
 │       └── intent_router_dataset.csv
 │
 ├── docs/
-│   └── company_policies/
-│       ├── refund_policy.txt
-│       ├── shipping_policy.txt
-│       ├── warranty_policy.txt
-│       ├── account_policy.txt
-│       └── technical_support_policy.txt
+│   ├── company_policies/
+│   │   ├── refund_policy.txt
+│   │   ├── shipping_policy.txt
+│   │   ├── warranty_policy.txt
+│   │   ├── account_policy.txt
+│   │   └── technical_support_policy.txt
+│   └── screenshots/
+│       ├── streamlit_english_ticket.png
+│       ├── streamlit_english_policy_context.png
+│       └── streamlit_german_ticket.png
 │
 ├── notebooks/
 │   ├── 01_data_exploration.ipynb
@@ -899,7 +948,33 @@ reports/fastapi_test_outputs.json
 reports/fastapi_test_summary.csv
 ```
 
-### 11. Optional LLM mode
+### 11. Run Streamlit dashboard
+
+Start the FastAPI backend first:
+
+```bash
+uvicorn api.main:app --reload
+```
+
+Then open a second terminal and run:
+
+```bash
+streamlit run dashboard/streamlit_app.py
+```
+
+The dashboard runs at:
+
+```text
+http://localhost:8501
+```
+
+The dashboard calls:
+
+```text
+POST http://127.0.0.1:8000/analyze-ticket
+```
+
+### 12. Optional LLM mode
 
 Create `.env` in the project root:
 
@@ -931,8 +1006,8 @@ If quota or billing is unavailable, the system falls back to template mode.
 - LLM reply generation is implemented but requires valid API quota/billing.
 - The current RAG policy base is small and manually created.
 - Intent router dataset is small and partially synthetic, so new real failure cases should be added over time.
-- FastAPI is implemented locally but not deployed yet.
-- Dashboard and cloud deployment are not yet complete.
+- FastAPI is validated locally but not deployed yet.
+- Streamlit dashboard is completed locally, but the frontend/backend are not deployed yet.
 
 ---
 
@@ -940,8 +1015,7 @@ If quota or billing is unavailable, the system falls back to template mode.
 
 Planned next modules and upgrades:
 
-- Streamlit dashboard
-- Cloud deployment
+- Cloud deployment of FastAPI backend and Streamlit dashboard
 - Larger multilingual policy knowledge base
 - German policy documents
 - Better German sentiment model using German or multilingual sentiment data
@@ -958,21 +1032,32 @@ Planned next modules and upgrades:
 ## Next Milestone
 
 ```text
-Phase 8B: Final FastAPI validation
-Phase 9: Streamlit Dashboard
+Phase 10: Deployment
 ```
 
 Immediate tasks:
 
 ```text
-1. Test /health endpoint.
-2. Test /analyze-ticket with mixed English/German cases.
-3. Save example API outputs in reports/.
-4. Commit and push FastAPI + intent router changes.
-5. Start Streamlit dashboard.
+1. Save final Streamlit screenshots in docs/screenshots/.
+2. Run FastAPI validation scripts and keep reports/fastapi_test_outputs.json plus reports/fastapi_test_summary.csv.
+3. Commit and push the completed FastAPI + Streamlit dashboard stage.
+4. Prepare deployment files for backend/frontend.
+5. Deploy and document live URLs.
 ```
 
-FastAPI endpoint:
+Local backend command:
+
+```bash
+uvicorn api.main:app --reload
+```
+
+Local dashboard command:
+
+```bash
+streamlit run dashboard/streamlit_app.py
+```
+
+Main FastAPI endpoint:
 
 ```text
 POST /analyze-ticket
@@ -982,16 +1067,16 @@ Example response:
 
 ```json
 {
-  "ticket": "My laptop arrived damaged and I want a refund.",
+  "ticket": "My product arrived damaged and I want a refund urgently.",
   "language": "en",
   "detected_intent": "refund_issue",
-  "intent_confidence": 0.92,
+  "intent_confidence": 0.66,
   "intent_router_source": "model",
   "rag_used": true,
   "requires_human_review": false,
   "model_predictions": {
     "ticket_type": "Incident",
-    "queue": "Technical Support",
+    "queue": "Product Support",
     "priority": "high",
     "sentiment": "negative"
   },

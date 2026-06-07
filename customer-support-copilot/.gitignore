@@ -13,12 +13,24 @@ __pycache__/
 venv/
 .venv/
 
+# Streamlit secrets
+.streamlit/secrets.toml
+
 # Generated vector indexes
 # Rebuild using the RAG notebook instead of committing binary FAISS artifacts.
 vectorstore/
 
 # Raw datasets can be large/private
 data/raw/
+
+# Local model/cache directories that may become large
+.cache/
+hf_cache/
+huggingface/
+
+# Optional generated output folder
+# Keep curated validation artifacts in reports/ and screenshots in docs/screenshots/.
+outputs/
 
 # OS/editor junk
 .DS_Store
@@ -44,12 +56,3 @@ htmlcov/
 build/
 dist/
 *.egg-info/
-
-
-# Streamlit secrets - for future dashboard phase
-.streamlit/secrets.toml
-
-# Local model/cache directories that may become large
-.cache/
-hf_cache/
-huggingface/
