@@ -1,7 +1,7 @@
 from typing import Optional, Dict, Any
 
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from src.generate_reply import analyze_ticket_and_generate_reply
 
@@ -27,6 +27,12 @@ class TicketRequest(BaseModel):
         default=False,
         description="Set true to use optional LLM reply generation for support-policy issues. Defaults to template mode.",
     )
+
+    @field_validator("ticket_text", mode="before")
+    @classmethod
+    def strip_ticket_text(cls, value):
+        """Trim surrounding whitespace before Pydantic applies min_length."""
+        return value.strip() if isinstance(value, str) else value
 
 
 class TicketResponse(BaseModel):

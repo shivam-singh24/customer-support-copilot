@@ -4,6 +4,17 @@ from pathlib import Path
 import joblib
 import numpy as np
 
+try:
+    from .sentiment_utils import (
+        get_german_sentiment_analysis,
+        predict_sentiment as predict_sentiment_for_language,
+    )
+except ImportError:  # Allows running this file directly from src/
+    from sentiment_utils import (
+        get_german_sentiment_analysis,
+        predict_sentiment as predict_sentiment_for_language,
+    )
+
 
 # ============================================================
 # Paths and model loading
@@ -109,111 +120,18 @@ def get_prediction_analysis(model, text):
 
 
 # ============================================================
-# German sentiment fallback
+# Language-aware sentiment wrapper
 # ============================================================
-
-GERMAN_NEGATIVE_PHRASES = [
-    "funktioniert nicht",
-    "nicht funktioniert",
-    "geht nicht",
-    "klappt nicht",
-    "nicht gut",
-    "sehr schlecht",
-]
-
-GERMAN_NEGATIVE_WORDS = [
-    "schlecht",
-    "defekt",
-    "fehler",
-    "problem",
-    "probleme",
-    "kaputt",
-    "enttäuscht",
-    "unzufrieden",
-    "beschwerde",
-    "verzögerung",
-    "ausfall",
-    "störung",
-    "dringend",
-    "kritisch",
-    "inakzeptabel",
-    "frustriert",
-    "fehlgeschlagen",
-]
-
-GERMAN_POSITIVE_WORDS = [
-    "gut",
-    "zufrieden",
-    "danke",
-    "hilfreich",
-    "gelöst",
-    "schnell",
-    "perfekt",
-    "ausgezeichnet",
-    "erfolgreich",
-]
-
-
-def get_german_sentiment_analysis(raw_text):
-    """
-    Rule-based German sentiment analysis.
-
-    Uses raw text so German characters and phrases like
-    'funktioniert nicht' are preserved.
-    """
-    text = str(raw_text).lower()
-
-    matched_negative_phrases = [
-        phrase for phrase in GERMAN_NEGATIVE_PHRASES
-        if phrase in text
-    ]
-
-    matched_negative_words = [
-        word for word in GERMAN_NEGATIVE_WORDS
-        if word in text
-    ]
-
-    matched_positive_words = [
-        word for word in GERMAN_POSITIVE_WORDS
-        if word in text
-    ]
-
-    negative_score = (2 * len(matched_negative_phrases)) + len(matched_negative_words)
-    positive_score = len(matched_positive_words)
-
-    if negative_score > positive_score:
-        sentiment = "negative"
-    elif positive_score > negative_score:
-        sentiment = "positive"
-    else:
-        sentiment = "neutral"
-
-    return {
-        "sentiment": sentiment,
-        "method": "German keyword-rule fallback",
-        "negative_score": negative_score,
-        "positive_score": positive_score,
-        "matched_negative_phrases": matched_negative_phrases,
-        "matched_negative_words": matched_negative_words,
-        "matched_positive_words": matched_positive_words,
-    }
 
 
 def predict_sentiment(raw_text, cleaned_text, language="en"):
-    """
-    English sentiment uses the trained ML model.
-    German sentiment uses keyword-rule fallback because the sentiment
-    model was trained on external English review data.
-    """
-    language = str(language).lower()
-
-    if language in ["de", "german", "deutsch"]:
-        return get_german_sentiment_analysis(raw_text)
-
-    return {
-        "sentiment": MODELS["sentiment"].predict([cleaned_text])[0],
-        "method": "English ML sentiment model",
-    }
+    """Use the shared runtime sentiment policy without changing this API."""
+    return predict_sentiment_for_language(
+        raw_text=raw_text,
+        model_text=cleaned_text,
+        language=language,
+        sentiment_model=MODELS["sentiment"],
+    )
 
 
 # ============================================================

@@ -27,8 +27,10 @@ from langdetect import detect
 
 try:
     from .rag_pipeline import retrieve_policy_context
+    from .sentiment_utils import predict_sentiment as predict_sentiment_for_language
 except ImportError:  # Allows running this file directly from src/
     from rag_pipeline import retrieve_policy_context
+    from sentiment_utils import predict_sentiment as predict_sentiment_for_language
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -208,6 +210,7 @@ def detect_workflow_intent_rule_fallback(ticket_text: str) -> str:
     sales_product_keywords = [
         "want to know", "tell me about", "information about", "details about", "price", "pricing", "cost",
         "available", "availability", "specs", "specification", "ryzen", "intel", "buy", "purchase",
+        "want apple ipad", "want an ipad", "looking for an ipad",
         "want one more", "buy another", "interested in buying", "möchte wissen", "informationen über", "preis",
         "kosten", "verfügbarkeit", "verfügbar", "kaufen", "weiteres kaufen",
     ]
@@ -216,8 +219,6 @@ def detect_workflow_intent_rule_fallback(ticket_text: str) -> str:
         "thanks", "great product", "funktioniert gut", "sehr gut", "zufrieden", "danke", "tolles produkt",
     ]
 
-    if any(phrase in text for phrase in ambiguous_phrases):
-        return "ambiguous"
     if any(keyword in text for keyword in refund_keywords):
         return "refund_issue"
     if any(keyword in text for keyword in shipping_keywords):
@@ -232,6 +233,8 @@ def detect_workflow_intent_rule_fallback(ticket_text: str) -> str:
         return "sales_or_product_inquiry"
     if any(keyword in text for keyword in positive_keywords):
         return "positive_feedback"
+    if any(phrase in text for phrase in ambiguous_phrases):
+        return "ambiguous"
     if len(words) < 4:
         return "ambiguous"
 
@@ -776,13 +779,28 @@ def analyze_ticket_and_generate_reply(ticket_text: str, use_llm: bool = False) -
         ticket_text=ticket_text,
     )
 
+    # Abstain from policy routing when the trained router is uncertain.
+    # A lightweight rule fallback can still preserve obvious support intents
+    # such as refunds or hacked accounts, while vague/product requests skip RAG.
+    if intent_confidence is not None and intent_confidence < LOW_INTENT_CONFIDENCE_THRESHOLD:
+        fallback_intent = detect_workflow_intent_rule_fallback(ticket_text)
+        if fallback_intent not in {"ambiguous", "general_inquiry"}:
+            detected_intent = fallback_intent
+            intent_router_source = "low_confidence_rule_fallback"
+
     # These models are assumed to be saved sklearn Pipelines, so they can accept raw text.
     # If your models were trained on pre-cleaned text outside a Pipeline, apply the exact
     # same preprocessing here before prediction.
     predicted_type = models["type_model"].predict([ticket_text])[0]
     predicted_queue = models["queue_model"].predict([ticket_text])[0]
     predicted_priority = models["priority_model"].predict([ticket_text])[0]
-    predicted_sentiment = models["sentiment_model"].predict([ticket_text])[0]
+    sentiment_analysis = predict_sentiment_for_language(
+        raw_text=ticket_text,
+        model_text=ticket_text,
+        language=language,
+        sentiment_model=models["sentiment_model"],
+    )
+    predicted_sentiment = sentiment_analysis["sentiment"]
 
     final_priority, final_sentiment, requires_human_review = _adjust_final_metadata_for_intent(
         ticket_text=ticket_text,
@@ -799,6 +817,7 @@ def analyze_ticket_and_generate_reply(ticket_text: str, use_llm: bool = False) -
         "queue": predicted_queue,
         "priority": predicted_priority,
         "sentiment": predicted_sentiment,
+        "sentiment_method": sentiment_analysis["method"],
     }
 
     if not rag_used:

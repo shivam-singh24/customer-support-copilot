@@ -41,7 +41,7 @@ def get_vectorstore() -> FAISS:
     if not os.path.isdir(VECTORSTORE_DIR):
         raise FileNotFoundError(
             f"FAISS vectorstore not found at: {VECTORSTORE_DIR}\n"
-            "Run notebooks/06_rag_knowledge_retrieval.ipynb first to rebuild and save "
+            "Run notebooks/07_rag_knowledge_retrieval.ipynb first to rebuild and save "
             "the multilingual FAISS index."
         )
 

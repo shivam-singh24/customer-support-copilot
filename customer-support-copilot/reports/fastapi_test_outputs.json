@@ -4,15 +4,26 @@
       "case_id": 1,
       "category": "english_refund",
       "ticket_text": "My laptop arrived damaged and I want a refund.",
+      "expected_language": "en",
       "expected_intent": "refund_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "refund_policy.txt"
+      "expected_policy_source": "refund_policy.txt",
+      "expected_final_sentiment": "negative",
+      "expected_final_queue": "Billing or Customer Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_sentiment_pass": true,
+      "final_queue_pass": true
     },
     "response": {
       "ticket": "My laptop arrived damaged and I want a refund.",
@@ -26,7 +37,8 @@
         "ticket_type": "Incident",
         "queue": "Technical Support",
         "priority": "high",
-        "sentiment": "negative"
+        "sentiment": "negative",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "high",
       "final_sentiment": "negative",
@@ -45,15 +57,24 @@
       "case_id": 2,
       "category": "english_shipping",
       "ticket_text": "My package has not arrived and tracking is not updating.",
+      "expected_language": "en",
       "expected_intent": "shipping_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "shipping_policy.txt"
+      "expected_policy_source": "shipping_policy.txt",
+      "expected_final_queue": "Logistics or Customer Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_queue_pass": true
     },
     "response": {
       "ticket": "My package has not arrived and tracking is not updating.",
@@ -67,7 +88,8 @@
         "ticket_type": "Problem",
         "queue": "Technical Support",
         "priority": "low",
-        "sentiment": "negative"
+        "sentiment": "negative",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "low",
       "final_sentiment": "negative",
@@ -86,15 +108,26 @@
       "case_id": 3,
       "category": "english_account",
       "ticket_text": "I think my account has been hacked.",
+      "expected_language": "en",
       "expected_intent": "account_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "account_policy.txt"
+      "expected_policy_source": "account_policy.txt",
+      "expected_final_priority": "high",
+      "expected_final_queue": "Account Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_queue_pass": true
     },
     "response": {
       "ticket": "I think my account has been hacked.",
@@ -108,7 +141,8 @@
         "ticket_type": "Incident",
         "queue": "Technical Support",
         "priority": "high",
-        "sentiment": "negative"
+        "sentiment": "negative",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "high",
       "final_sentiment": "negative",
@@ -127,15 +161,24 @@
       "case_id": 4,
       "category": "english_technical",
       "ticket_text": "The app keeps crashing whenever I open it.",
+      "expected_language": "en",
       "expected_intent": "technical_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "technical_support_policy.txt"
+      "expected_policy_source": "technical_support_policy.txt",
+      "expected_final_queue": "Technical Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_queue_pass": true
     },
     "response": {
       "ticket": "The app keeps crashing whenever I open it.",
@@ -149,7 +192,8 @@
         "ticket_type": "Incident",
         "queue": "Product Support",
         "priority": "high",
-        "sentiment": "neutral"
+        "sentiment": "neutral",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "high",
       "final_sentiment": "neutral",
@@ -168,15 +212,24 @@
       "case_id": 5,
       "category": "english_warranty",
       "ticket_text": "My charger stopped working within the warranty period.",
+      "expected_language": "en",
       "expected_intent": "warranty_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "warranty_policy.txt"
+      "expected_policy_source": "warranty_policy.txt",
+      "expected_final_queue": "Warranty Support or Technical Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_queue_pass": true
     },
     "response": {
       "ticket": "My charger stopped working within the warranty period.",
@@ -190,7 +243,8 @@
         "ticket_type": "Incident",
         "queue": "IT Support",
         "priority": "low",
-        "sentiment": "negative"
+        "sentiment": "negative",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "low",
       "final_sentiment": "negative",
@@ -209,15 +263,26 @@
       "case_id": 6,
       "category": "english_product_inquiry",
       "ticket_text": "I want to know about laptop Ryzen 5.",
+      "expected_language": "en",
       "expected_intent": "sales_or_product_inquiry",
       "expected_rag_used": false,
-      "expected_policy_source": "No policy needed"
+      "expected_policy_source": "No policy needed",
+      "expected_final_priority": "low",
+      "expected_final_sentiment": "neutral"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true
     },
     "response": {
       "ticket": "I want to know about laptop Ryzen 5.",
@@ -231,7 +296,8 @@
         "ticket_type": "Request",
         "queue": "IT Support",
         "priority": "medium",
-        "sentiment": "negative"
+        "sentiment": "negative",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "low",
       "final_sentiment": "neutral",
@@ -250,15 +316,26 @@
       "case_id": 7,
       "category": "english_positive_feedback",
       "ticket_text": "My laptop is working excellently, thank you.",
+      "expected_language": "en",
       "expected_intent": "positive_feedback",
       "expected_rag_used": false,
-      "expected_policy_source": "No policy needed"
+      "expected_policy_source": "No policy needed",
+      "expected_final_priority": "low",
+      "expected_final_sentiment": "positive"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true
     },
     "response": {
       "ticket": "My laptop is working excellently, thank you.",
@@ -272,7 +349,8 @@
         "ticket_type": "Problem",
         "queue": "Technical Support",
         "priority": "high",
-        "sentiment": "positive"
+        "sentiment": "positive",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "low",
       "final_sentiment": "positive",
@@ -291,15 +369,28 @@
       "case_id": 8,
       "category": "english_ambiguous",
       "ticket_text": "Help me.",
+      "expected_language": "unknown",
       "expected_intent": "ambiguous",
       "expected_rag_used": false,
-      "expected_policy_source": "No policy needed"
+      "expected_policy_source": "No policy needed",
+      "expected_final_priority": "medium",
+      "expected_final_sentiment": "neutral",
+      "expected_human_review": true
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true,
+      "human_review_pass": true
     },
     "response": {
       "ticket": "Help me.",
@@ -313,7 +404,8 @@
         "ticket_type": "Request",
         "queue": "Billing and Payments",
         "priority": "high",
-        "sentiment": "neutral"
+        "sentiment": "neutral",
+        "sentiment_method": "English ML sentiment model"
       },
       "final_priority": "medium",
       "final_sentiment": "neutral",
@@ -332,15 +424,28 @@
       "case_id": 9,
       "category": "german_refund",
       "ticket_text": "Ich habe den falschen Artikel erhalten und möchte mein Geld zurück.",
+      "expected_language": "de",
       "expected_intent": "refund_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "refund_policy.txt"
+      "expected_policy_source": "refund_policy.txt",
+      "expected_final_sentiment": "negative",
+      "expected_sentiment_method": "German keyword-rule fallback",
+      "expected_final_queue": "Billing or Customer Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_sentiment_pass": true,
+      "final_queue_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Ich habe den falschen Artikel erhalten und möchte mein Geld zurück.",
@@ -354,17 +459,18 @@
         "ticket_type": "Incident",
         "queue": "Returns and Exchanges",
         "priority": "medium",
-        "sentiment": "neutral"
+        "sentiment": "negative",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "medium",
-      "final_sentiment": "neutral",
+      "final_sentiment": "negative",
       "final_queue_recommendation": "Billing or Customer Support",
       "policy_source": "refund_policy.txt",
       "policy_context": "[Policy Source 1: refund_policy.txt]\nRefunds are not allowed when:\n- The product was damaged because of customer misuse.\n- The refund request is made after 30 days.\n- The customer cannot provide proof of purchase.\n- The item was purchased from an unauthorized seller.\n\nFor damaged products, customers may choose either a refund or replacement.\n\nRefund requests should be assigned to the Billing or Customer Support queue depending on the issue.\nHigh-value refund disputes should be marked as high priority.\n\n[Policy Source 2: refund_policy.txt]\nRefund Policy\n\nCustomers can request a refund within 30 days of purchase.\n\nRefunds are allowed when:\n- The product is damaged on arrival.\n- The wrong item was delivered.\n- The product does not match the description.\n- The customer was charged incorrectly.\n- The customer received a defective item.\n\n[Policy Source 3: account_policy.txt]\nAccount Policy\n\nCustomers can request help for account login, password reset, profile update, email change, and account recovery.\n\nFor login issues:\n- Verify the registered email address.\n- Ask the customer to reset their password.\n- Check whether the account is locked.\n- Escalate if the account may be compromised.\n\nFor email change requests, support agents must verify customer identity.\n\nFor security issues, support agents should not share sensitive account information without verification.\n\n[Policy Source 4: warranty_policy.txt]\nWarranty Policy\n\nProducts include a 1-year limited warranty from the date of purchase.\n\nWarranty covers:\n- Manufacturing defects.\n- Hardware failure under normal use.\n- Battery or charging defects.\n- Product malfunction not caused by misuse.\n- Device failure within the warranty period.\n\nWarranty does not cover:\n- Physical damage caused by the customer.\n- Water damage.\n- Unauthorized repair.\n- Accidental damage.\n- Damage after warranty expiry.\n\n[Policy Source 5: shipping_policy.txt]\nShipping Policy\n\nStandard delivery usually takes 5 to 7 business days.\n\nCustomers can contact support when:\n- The order is delayed.\n- Tracking information is not updating.\n- The package is marked as delivered but not received.\n- The wrong delivery address was used.\n- The package is lost during transit.\n\nFor delayed shipments, support agents should first check the tracking status.\n\nFor lost packages, the support team should verify courier information before offering replacement or refund.",
       "policy_suggested_queue": "Billing or Customer Support",
       "policy_suggested_action": "review refund eligibility and ask for proof of purchase",
       "generation_mode": "template",
-      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nVielen Dank, dass Sie den Kundensupport kontaktiert haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nIhre Anfrage wurde erfasst und wird vom zuständigen Support-Team geprüft.\n\nRichtlinienhinweis:\nDas Support-Team wird die Erstattungsberechtigung prüfen und gegebenenfalls einen Kaufnachweis anfordern. Bei beschädigten Produkten kann je nach Richtlinie eine Erstattung oder ein Ersatz möglich sein.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
+      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nEs tut uns leid zu hören, dass Sie dieses Problem haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nIhre Anfrage wurde erfasst und wird vom zuständigen Support-Team geprüft.\n\nRichtlinienhinweis:\nDas Support-Team wird die Erstattungsberechtigung prüfen und gegebenenfalls einen Kaufnachweis anfordern. Bei beschädigten Produkten kann je nach Richtlinie eine Erstattung oder ein Ersatz möglich sein.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
       "llm_error": null
     }
   },
@@ -373,15 +479,28 @@
       "case_id": 10,
       "category": "german_shipping",
       "ticket_text": "Das Paket wird als zugestellt angezeigt, aber ich habe es nicht erhalten.",
+      "expected_language": "de",
       "expected_intent": "shipping_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "shipping_policy.txt"
+      "expected_policy_source": "shipping_policy.txt",
+      "expected_final_sentiment": "negative",
+      "expected_sentiment_method": "German keyword-rule fallback",
+      "expected_final_queue": "Logistics or Customer Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_sentiment_pass": true,
+      "final_queue_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Das Paket wird als zugestellt angezeigt, aber ich habe es nicht erhalten.",
@@ -395,17 +514,18 @@
         "ticket_type": "Incident",
         "queue": "Service Outages and Maintenance",
         "priority": "low",
-        "sentiment": "neutral"
+        "sentiment": "negative",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "low",
-      "final_sentiment": "neutral",
+      "final_sentiment": "negative",
       "final_queue_recommendation": "Logistics or Customer Support",
       "policy_source": "shipping_policy.txt",
       "policy_context": "[Policy Source 1: shipping_policy.txt]\nShipping Policy\n\nStandard delivery usually takes 5 to 7 business days.\n\nCustomers can contact support when:\n- The order is delayed.\n- Tracking information is not updating.\n- The package is marked as delivered but not received.\n- The wrong delivery address was used.\n- The package is lost during transit.\n\nFor delayed shipments, support agents should first check the tracking status.\n\nFor lost packages, the support team should verify courier information before offering replacement or refund.\n\n[Policy Source 2: warranty_policy.txt]\nWarranty Policy\n\nProducts include a 1-year limited warranty from the date of purchase.\n\nWarranty covers:\n- Manufacturing defects.\n- Hardware failure under normal use.\n- Battery or charging defects.\n- Product malfunction not caused by misuse.\n- Device failure within the warranty period.\n\nWarranty does not cover:\n- Physical damage caused by the customer.\n- Water damage.\n- Unauthorized repair.\n- Accidental damage.\n- Damage after warranty expiry.\n\n[Policy Source 3: refund_policy.txt]\nRefunds are not allowed when:\n- The product was damaged because of customer misuse.\n- The refund request is made after 30 days.\n- The customer cannot provide proof of purchase.\n- The item was purchased from an unauthorized seller.\n\nFor damaged products, customers may choose either a refund or replacement.\n\nRefund requests should be assigned to the Billing or Customer Support queue depending on the issue.\nHigh-value refund disputes should be marked as high priority.\n\n[Policy Source 4: warranty_policy.txt]\nEligible customers may receive repair, replacement, or service support.\n\nWarranty-related tickets should be assigned to Technical Support or Warranty Support.\n\n[Policy Source 5: account_policy.txt]\nAccount Policy\n\nCustomers can request help for account login, password reset, profile update, email change, and account recovery.\n\nFor login issues:\n- Verify the registered email address.\n- Ask the customer to reset their password.\n- Check whether the account is locked.\n- Escalate if the account may be compromised.\n\nFor email change requests, support agents must verify customer identity.\n\nFor security issues, support agents should not share sensitive account information without verification.",
       "policy_suggested_queue": "Logistics or Customer Support",
       "policy_suggested_action": "check tracking status and verify courier information",
       "generation_mode": "template",
-      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nVielen Dank, dass Sie den Kundensupport kontaktiert haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nIhre Anfrage wurde aufgenommen und wird von unserem Support-Team geprüft.\n\nRichtlinienhinweis:\nDas Support-Team wird den Sendungsstatus und die Kurierinformationen prüfen, bevor die nächsten Schritte festgelegt werden.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
+      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nEs tut uns leid zu hören, dass Sie dieses Problem haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nIhre Anfrage wurde aufgenommen und wird von unserem Support-Team geprüft.\n\nRichtlinienhinweis:\nDas Support-Team wird den Sendungsstatus und die Kurierinformationen prüfen, bevor die nächsten Schritte festgelegt werden.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
       "llm_error": null
     }
   },
@@ -414,15 +534,30 @@
       "case_id": 11,
       "category": "german_account",
       "ticket_text": "Ich glaube, mein Konto wurde gehackt.",
+      "expected_language": "de",
       "expected_intent": "account_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "account_policy.txt"
+      "expected_policy_source": "account_policy.txt",
+      "expected_final_priority": "high",
+      "expected_final_sentiment": "negative",
+      "expected_sentiment_method": "German keyword-rule fallback",
+      "expected_final_queue": "Account Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true,
+      "final_queue_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Ich glaube, mein Konto wurde gehackt.",
@@ -436,17 +571,18 @@
         "ticket_type": "Incident",
         "queue": "Billing and Payments",
         "priority": "low",
-        "sentiment": "neutral"
+        "sentiment": "negative",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "high",
-      "final_sentiment": "neutral",
+      "final_sentiment": "negative",
       "final_queue_recommendation": "Account Support",
       "policy_source": "account_policy.txt",
       "policy_context": "[Policy Source 1: account_policy.txt]\nAccount Policy\n\nCustomers can request help for account login, password reset, profile update, email change, and account recovery.\n\nFor login issues:\n- Verify the registered email address.\n- Ask the customer to reset their password.\n- Check whether the account is locked.\n- Escalate if the account may be compromised.\n\nFor email change requests, support agents must verify customer identity.\n\nFor security issues, support agents should not share sensitive account information without verification.\n\n[Policy Source 2: account_policy.txt]\nAccount issues should be assigned to Account Support.\nCompromised account reports should be marked as high priority.\n\n[Policy Source 3: refund_policy.txt]\nRefunds are not allowed when:\n- The product was damaged because of customer misuse.\n- The refund request is made after 30 days.\n- The customer cannot provide proof of purchase.\n- The item was purchased from an unauthorized seller.\n\nFor damaged products, customers may choose either a refund or replacement.\n\nRefund requests should be assigned to the Billing or Customer Support queue depending on the issue.\nHigh-value refund disputes should be marked as high priority.\n\n[Policy Source 4: warranty_policy.txt]\nWarranty Policy\n\nProducts include a 1-year limited warranty from the date of purchase.\n\nWarranty covers:\n- Manufacturing defects.\n- Hardware failure under normal use.\n- Battery or charging defects.\n- Product malfunction not caused by misuse.\n- Device failure within the warranty period.\n\nWarranty does not cover:\n- Physical damage caused by the customer.\n- Water damage.\n- Unauthorized repair.\n- Accidental damage.\n- Damage after warranty expiry.\n\n[Policy Source 5: refund_policy.txt]\nRefund Policy\n\nCustomers can request a refund within 30 days of purchase.\n\nRefunds are allowed when:\n- The product is damaged on arrival.\n- The wrong item was delivered.\n- The product does not match the description.\n- The customer was charged incorrectly.\n- The customer received a defective item.",
       "policy_suggested_queue": "Account Support",
       "policy_suggested_action": "verify identity and check account access status",
       "generation_mode": "template",
-      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nVielen Dank, dass Sie den Kundensupport kontaktiert haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nWir verstehen, dass dieses Anliegen dringend sein kann. Unser Support-Team wird Ihre Anfrage sorgfältig prüfen.\n\nRichtlinienhinweis:\nDas Support-Team muss möglicherweise Ihre Identität prüfen, bevor es bei Kontozugriff oder Kontoänderungen helfen kann.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
+      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nEs tut uns leid zu hören, dass Sie dieses Problem haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nWir verstehen, dass dieses Anliegen dringend sein kann. Unser Support-Team wird Ihre Anfrage sorgfältig prüfen.\n\nRichtlinienhinweis:\nDas Support-Team muss möglicherweise Ihre Identität prüfen, bevor es bei Kontozugriff oder Kontoänderungen helfen kann.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
       "llm_error": null
     }
   },
@@ -455,15 +591,28 @@
       "case_id": 12,
       "category": "german_technical",
       "ticket_text": "Die App stürzt jedes Mal ab, wenn ich sie öffne.",
+      "expected_language": "de",
       "expected_intent": "technical_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "technical_support_policy.txt"
+      "expected_policy_source": "technical_support_policy.txt",
+      "expected_final_sentiment": "negative",
+      "expected_sentiment_method": "German keyword-rule fallback",
+      "expected_final_queue": "Technical Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_sentiment_pass": true,
+      "final_queue_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Die App stürzt jedes Mal ab, wenn ich sie öffne.",
@@ -477,17 +626,18 @@
         "ticket_type": "Incident",
         "queue": "Technical Support",
         "priority": "high",
-        "sentiment": "neutral"
+        "sentiment": "negative",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "high",
-      "final_sentiment": "neutral",
+      "final_sentiment": "negative",
       "final_queue_recommendation": "Technical Support",
       "policy_source": "technical_support_policy.txt",
       "policy_context": "[Policy Source 1: technical_support_policy.txt]\nTechnical Support Policy\n\nTechnical support handles product issues such as:\n- Battery draining quickly.\n- Device not turning on.\n- Software errors.\n- Connectivity problems.\n- App crashes.\n- Performance issues.\n- Installation failures.\n- Error messages.\n- Slow system behavior.\n\nSupport agents should collect:\n- Product name.\n- Issue description.\n- Error messages.\n- Device model.\n- Troubleshooting steps already tried.\n\n[Policy Source 2: warranty_policy.txt]\nWarranty Policy\n\nProducts include a 1-year limited warranty from the date of purchase.\n\nWarranty covers:\n- Manufacturing defects.\n- Hardware failure under normal use.\n- Battery or charging defects.\n- Product malfunction not caused by misuse.\n- Device failure within the warranty period.\n\nWarranty does not cover:\n- Physical damage caused by the customer.\n- Water damage.\n- Unauthorized repair.\n- Accidental damage.\n- Damage after warranty expiry.\n\n[Policy Source 3: account_policy.txt]\nAccount Policy\n\nCustomers can request help for account login, password reset, profile update, email change, and account recovery.\n\nFor login issues:\n- Verify the registered email address.\n- Ask the customer to reset their password.\n- Check whether the account is locked.\n- Escalate if the account may be compromised.\n\nFor email change requests, support agents must verify customer identity.\n\nFor security issues, support agents should not share sensitive account information without verification.\n\n[Policy Source 4: refund_policy.txt]\nRefunds are not allowed when:\n- The product was damaged because of customer misuse.\n- The refund request is made after 30 days.\n- The customer cannot provide proof of purchase.\n- The item was purchased from an unauthorized seller.\n\nFor damaged products, customers may choose either a refund or replacement.\n\nRefund requests should be assigned to the Billing or Customer Support queue depending on the issue.\nHigh-value refund disputes should be marked as high priority.\n\n[Policy Source 5: shipping_policy.txt]\nShipping Policy\n\nStandard delivery usually takes 5 to 7 business days.\n\nCustomers can contact support when:\n- The order is delayed.\n- Tracking information is not updating.\n- The package is marked as delivered but not received.\n- The wrong delivery address was used.\n- The package is lost during transit.\n\nFor delayed shipments, support agents should first check the tracking status.\n\nFor lost packages, the support team should verify courier information before offering replacement or refund.",
       "policy_suggested_queue": "Technical Support",
       "policy_suggested_action": "collect device details, error messages, and troubleshooting steps",
       "generation_mode": "template",
-      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nVielen Dank, dass Sie den Kundensupport kontaktiert haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nWir verstehen, dass dieses Anliegen dringend sein kann. Unser Support-Team wird Ihre Anfrage sorgfältig prüfen.\n\nRichtlinienhinweis:\nDas Support-Team kann Produktdetails, Gerätemodell, Fehlermeldungen und bereits ausprobierte Schritte zur Fehlerbehebung anfordern.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
+      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nEs tut uns leid zu hören, dass Sie dieses Problem haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nWir verstehen, dass dieses Anliegen dringend sein kann. Unser Support-Team wird Ihre Anfrage sorgfältig prüfen.\n\nRichtlinienhinweis:\nDas Support-Team kann Produktdetails, Gerätemodell, Fehlermeldungen und bereits ausprobierte Schritte zur Fehlerbehebung anfordern.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
       "llm_error": null
     }
   },
@@ -496,15 +646,28 @@
       "case_id": 13,
       "category": "german_warranty",
       "ticket_text": "Mein Ladegerät funktioniert innerhalb der Garantiezeit nicht mehr.",
+      "expected_language": "de",
       "expected_intent": "warranty_issue",
       "expected_rag_used": true,
-      "expected_policy_source": "warranty_policy.txt"
+      "expected_policy_source": "warranty_policy.txt",
+      "expected_final_sentiment": "negative",
+      "expected_sentiment_method": "German keyword-rule fallback",
+      "expected_final_queue": "Warranty Support or Technical Support"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_sentiment_pass": true,
+      "final_queue_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Mein Ladegerät funktioniert innerhalb der Garantiezeit nicht mehr.",
@@ -518,17 +681,18 @@
         "ticket_type": "Incident",
         "queue": "IT Support",
         "priority": "medium",
-        "sentiment": "neutral"
+        "sentiment": "negative",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "medium",
-      "final_sentiment": "neutral",
+      "final_sentiment": "negative",
       "final_queue_recommendation": "Warranty Support or Technical Support",
       "policy_source": "warranty_policy.txt",
       "policy_context": "[Policy Source 1: warranty_policy.txt]\nWarranty Policy\n\nProducts include a 1-year limited warranty from the date of purchase.\n\nWarranty covers:\n- Manufacturing defects.\n- Hardware failure under normal use.\n- Battery or charging defects.\n- Product malfunction not caused by misuse.\n- Device failure within the warranty period.\n\nWarranty does not cover:\n- Physical damage caused by the customer.\n- Water damage.\n- Unauthorized repair.\n- Accidental damage.\n- Damage after warranty expiry.\n\n[Policy Source 2: warranty_policy.txt]\nEligible customers may receive repair, replacement, or service support.\n\nWarranty-related tickets should be assigned to Technical Support or Warranty Support.\n\n[Policy Source 3: refund_policy.txt]\nRefunds are not allowed when:\n- The product was damaged because of customer misuse.\n- The refund request is made after 30 days.\n- The customer cannot provide proof of purchase.\n- The item was purchased from an unauthorized seller.\n\nFor damaged products, customers may choose either a refund or replacement.\n\nRefund requests should be assigned to the Billing or Customer Support queue depending on the issue.\nHigh-value refund disputes should be marked as high priority.\n\n[Policy Source 4: account_policy.txt]\nAccount Policy\n\nCustomers can request help for account login, password reset, profile update, email change, and account recovery.\n\nFor login issues:\n- Verify the registered email address.\n- Ask the customer to reset their password.\n- Check whether the account is locked.\n- Escalate if the account may be compromised.\n\nFor email change requests, support agents must verify customer identity.\n\nFor security issues, support agents should not share sensitive account information without verification.\n\n[Policy Source 5: shipping_policy.txt]\nShipping Policy\n\nStandard delivery usually takes 5 to 7 business days.\n\nCustomers can contact support when:\n- The order is delayed.\n- Tracking information is not updating.\n- The package is marked as delivered but not received.\n- The wrong delivery address was used.\n- The package is lost during transit.\n\nFor delayed shipments, support agents should first check the tracking status.\n\nFor lost packages, the support team should verify courier information before offering replacement or refund.",
       "policy_suggested_queue": "Warranty Support or Technical Support",
       "policy_suggested_action": "verify purchase date and warranty eligibility",
       "generation_mode": "template",
-      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nVielen Dank, dass Sie den Kundensupport kontaktiert haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nIhre Anfrage wurde erfasst und wird vom zuständigen Support-Team geprüft.\n\nRichtlinienhinweis:\nDas Support-Team wird Kaufdatum und Garantieanspruch prüfen, bevor Reparatur, Ersatz oder Serviceunterstützung empfohlen wird.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
+      "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nEs tut uns leid zu hören, dass Sie dieses Problem haben.\n\nBasierend auf Ihrer Nachricht wurde eine relevante Unternehmensrichtlinie zu diesem Anliegen gefunden.\n\nIhre Anfrage wurde erfasst und wird vom zuständigen Support-Team geprüft.\n\nRichtlinienhinweis:\nDas Support-Team wird Kaufdatum und Garantieanspruch prüfen, bevor Reparatur, Ersatz oder Serviceunterstützung empfohlen wird.\n\nEmpfohlener nächster Schritt:\nBitte halten Sie Bestelldaten, Produktinformationen, Screenshots oder Kaufnachweise bereit, falls diese vom Support-Team benötigt werden.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
       "llm_error": null
     }
   },
@@ -537,15 +701,28 @@
       "case_id": 14,
       "category": "german_product_inquiry",
       "ticket_text": "Ich möchte Informationen über einen Laptop mit Ryzen 5.",
+      "expected_language": "de",
       "expected_intent": "sales_or_product_inquiry",
       "expected_rag_used": false,
-      "expected_policy_source": "No policy needed"
+      "expected_policy_source": "No policy needed",
+      "expected_final_priority": "low",
+      "expected_final_sentiment": "neutral",
+      "expected_sentiment_method": "German keyword-rule fallback"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Ich möchte Informationen über einen Laptop mit Ryzen 5.",
@@ -559,7 +736,8 @@
         "ticket_type": "Request",
         "queue": "IT Support",
         "priority": "low",
-        "sentiment": "neutral"
+        "sentiment": "neutral",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "low",
       "final_sentiment": "neutral",
@@ -578,15 +756,28 @@
       "case_id": 15,
       "category": "german_positive_feedback",
       "ticket_text": "Mein Laptop funktioniert sehr gut, danke.",
+      "expected_language": "de",
       "expected_intent": "positive_feedback",
       "expected_rag_used": false,
-      "expected_policy_source": "No policy needed"
+      "expected_policy_source": "No policy needed",
+      "expected_final_priority": "low",
+      "expected_final_sentiment": "positive",
+      "expected_sentiment_method": "German keyword-rule fallback"
     },
     "status_code": 200,
     "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
       "intent_pass": true,
       "rag_used_pass": true,
-      "policy_source_pass": true
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true,
+      "sentiment_method_pass": true
     },
     "response": {
       "ticket": "Mein Laptop funktioniert sehr gut, danke.",
@@ -600,7 +791,8 @@
         "ticket_type": "Incident",
         "queue": "IT Support",
         "priority": "medium",
-        "sentiment": "neutral"
+        "sentiment": "positive",
+        "sentiment_method": "German keyword-rule fallback"
       },
       "final_priority": "low",
       "final_sentiment": "positive",
@@ -612,6 +804,117 @@
       "generation_mode": "template",
       "generated_reply": "Sehr geehrte Kundin, sehr geehrter Kunde,\n\nvielen Dank für Ihre positive Rückmeldung.\n\nEs freut uns zu hören, dass Sie mit dem Produkt zufrieden sind. Falls Sie weitere Unterstützung benötigen oder ein weiteres Produkt kaufen möchten, hilft Ihnen unser Customer-Service- oder Sales-Team gerne weiter.\n\nMit freundlichen Grüßen,\nCustomer Support Team",
       "llm_error": null
+    }
+  },
+  {
+    "case": {
+      "case_id": 16,
+      "category": "low_confidence_product_inquiry",
+      "ticket_text": "i want apple ipad",
+      "expected_language": "unknown",
+      "expected_intent": "sales_or_product_inquiry",
+      "expected_rag_used": false,
+      "expected_policy_source": "No policy needed",
+      "expected_final_priority": "low",
+      "expected_final_sentiment": "neutral",
+      "expected_human_review": true
+    },
+    "status_code": 200,
+    "checks": {
+      "status_code_pass": true,
+      "required_fields_pass": true,
+      "reply_nonempty_pass": true,
+      "model_predictions_pass": true,
+      "human_review_type_pass": true,
+      "language_pass": true,
+      "intent_pass": true,
+      "rag_used_pass": true,
+      "policy_source_pass": true,
+      "final_priority_pass": true,
+      "final_sentiment_pass": true,
+      "human_review_pass": true
+    },
+    "response": {
+      "ticket": "i want apple ipad",
+      "language": "unknown",
+      "detected_intent": "sales_or_product_inquiry",
+      "intent_confidence": 0.26128133327926467,
+      "intent_router_source": "low_confidence_rule_fallback",
+      "rag_used": false,
+      "requires_human_review": true,
+      "model_predictions": {
+        "ticket_type": "Request",
+        "queue": "Returns and Exchanges",
+        "priority": "medium",
+        "sentiment": "neutral",
+        "sentiment_method": "English ML sentiment model"
+      },
+      "final_priority": "low",
+      "final_sentiment": "neutral",
+      "final_queue_recommendation": "Sales or Customer Service",
+      "policy_source": "No policy needed",
+      "policy_context": "No policy context required for this sales/product inquiry.",
+      "policy_suggested_queue": "Sales or Customer Service",
+      "policy_suggested_action": "assist with product information, availability, pricing, or purchase guidance",
+      "generation_mode": "template",
+      "generated_reply": "Dear Customer,\n\nThank you for reaching out.\n\nYour message appears to be a product or sales inquiry rather than a technical support issue. Our Sales or Customer Service team can help with product details, availability, pricing, and next steps.\n\nBest regards,\nCustomer Support Team",
+      "llm_error": null
+    }
+  },
+  {
+    "case": {
+      "case_id": 17,
+      "category": "blank_whitespace",
+      "ticket_text": "     ",
+      "expected_status_code": 422
+    },
+    "status_code": 422,
+    "checks": {
+      "status_code_pass": true
+    },
+    "response": {
+      "detail": [
+        {
+          "type": "string_too_short",
+          "loc": [
+            "body",
+            "ticket_text"
+          ],
+          "msg": "String should have at least 5 characters",
+          "input": "",
+          "ctx": {
+            "min_length": 5
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": {
+      "case_id": 18,
+      "category": "too_short_after_trim",
+      "ticket_text": "  hi  ",
+      "expected_status_code": 422
+    },
+    "status_code": 422,
+    "checks": {
+      "status_code_pass": true
+    },
+    "response": {
+      "detail": [
+        {
+          "type": "string_too_short",
+          "loc": [
+            "body",
+            "ticket_text"
+          ],
+          "msg": "String should have at least 5 characters",
+          "input": "hi",
+          "ctx": {
+            "min_length": 5
+          }
+        }
+      ]
     }
   }
 ]
