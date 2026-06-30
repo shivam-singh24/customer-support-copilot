@@ -38,9 +38,19 @@ Policy-led or intent-led reply generation
 FastAPI backend response
 ```
 
-The project has completed the local **FastAPI + Streamlit validation stage**. The core ML + intent router + multilingual RAG + reply generation pipeline works through a FastAPI backend and is displayed through a Streamlit dashboard. The remaining major milestone is deployment.
+The project has completed the local **FastAPI + Streamlit validation stage**. The main GitHub repository preserves the original two-service architecture: a FastAPI backend and a separate Streamlit dashboard. A Render backend deployment was attempted, but the free instance ran out of memory while executing the full ML/RAG route. A Hugging Face Spaces adaptation was then created as the working public demo, where Streamlit calls the core analyzer directly inside one process.
 
 ---
+
+## Live Demo and Repositories
+
+| Resource | Link | Purpose |
+|---|---|---|
+| Main GitHub repository | https://github.com/shivam-singh24/customer-support-copilot | Full project architecture, training notebooks, FastAPI backend, Streamlit dashboard, reports, and deployment configuration |
+| Hugging Face Space | https://huggingface.co/spaces/sshivamm/customer-support-copilot | Public demo adaptation for free hosting |
+| Hugging Face repository files | https://huggingface.co/spaces/sshivamm/customer-support-copilot/tree/main | Runtime files used by the public demo |
+
+The Hugging Face Space is **not a separate ML project**. It is a deployment-oriented adaptation of the same Customer Support Copilot pipeline.
 
 ## Business Problem
 
@@ -74,11 +84,27 @@ The system is designed as a **decision-support copilot**, not as an unsupervised
 | Phase 7B | Optional LLM reply generation | Implemented, requires API quota/billing |
 | Phase 7.5 | Multilingual RAG and reply cleanup | Completed |
 | Phase 8A | Intent router / workflow classifier | Completed |
-| Phase 8B | FastAPI backend + validation | Completed |
+| Phase 8B | FastAPI backend + validation | Completed locally |
 | Phase 9 | Streamlit dashboard | Completed locally |
-| Phase 10 | Deployment | Pending |
+| Phase 10A | Render backend deployment attempt | Attempted; failed on free-tier memory during full ML/RAG route |
+| Phase 10B | Hugging Face Spaces public demo | Completed as a single-process Streamlit adaptation |
 
----
+### Deployment summary
+
+| Version | Architecture | Status | Purpose |
+|---|---|---|---|
+| Main GitHub repository | Streamlit dashboard → FastAPI backend → ML/RAG pipeline | Completed and validated locally | Canonical engineering architecture |
+| Render backend | FastAPI backend on Render | Not active; free instance exceeded memory during heavy inference | Deployment attempt for separate backend |
+| Hugging Face Space | Streamlit app → direct Python call → ML/RAG pipeline | Public demo adaptation | Practical free-hosting demo |
+
+Render event evidence showed:
+
+```text
+Instance failed
+Ran out of memory (used over 512MB) while running your code.
+```
+
+This means the backend architecture itself was not abandoned because it was wrong. It was adapted because the free hosting target did not provide enough memory for the full route.
 
 ## Features Completed
 
@@ -1003,78 +1029,134 @@ If quota or billing is unavailable, the system falls back to template mode.
 
 ---
 
-## Deployment Preparation
+## Deployment Status and Architecture Variants
 
-The project is prepared for a two-service deployment:
+The project now has two useful forms:
 
-| Component | Platform | File / Setting |
-|---|---|---|
-| FastAPI backend | Render | `render.yaml` |
-| Streamlit dashboard | Streamlit Community Cloud | `dashboard/streamlit_app.py` |
-| Python runtime | Render / compatible hosts | `runtime.txt` |
-| Dependencies | Render / Streamlit | `requirements.txt` |
+1. **Main GitHub architecture:** keeps FastAPI and Streamlit separate.
+2. **Hugging Face demo architecture:** runs Streamlit and inference in one process for free public hosting.
 
-### FastAPI backend deployment
-
-Render should use:
+### 1. Main GitHub architecture
 
 ```text
-Build Command:
-pip install -r requirements.txt
+Streamlit dashboard
+→ HTTP POST /analyze-ticket
+→ FastAPI backend
+→ src/generate_reply.py
+→ saved ML models + intent router + optional RAG
+→ template or optional LLM reply
+→ API response
+→ Streamlit display
+```
 
-Start Command:
+This is the stronger architecture for engineering explanation because it demonstrates:
+
+- frontend/backend separation
+- reusable API design
+- Pydantic request validation
+- stable response contracts
+- independent backend testing
+- a cleaner future production path
+
+Local commands:
+
+```bash
+uvicorn api.main:app --reload
+```
+
+```bash
+streamlit run dashboard/streamlit_app.py
+```
+
+The local dashboard calls:
+
+```text
+http://127.0.0.1:8000/analyze-ticket
+```
+
+### 2. Render backend attempt
+
+The repository contains Render deployment files:
+
+```text
+render.yaml
+runtime.txt
+requirements.txt
+```
+
+Render backend command:
+
+```bash
 uvicorn api.main:app --host 0.0.0.0 --port $PORT
 ```
 
-The API exposes:
+A Render deployment was attempted for the separate FastAPI backend. Lightweight routes could recover/report healthy, but the full ML/RAG route exceeded free-tier memory. The Render event log showed the instance ran out of memory after using over 512 MB.
+
+The heavy route is memory-intensive because it can load or use:
+
+- multiple saved scikit-learn pipelines
+- intent router artifact
+- sentiment model
+- sentence-transformer embedding model
+- FAISS vector store
+- policy retrieval logic
+- FastAPI/Uvicorn runtime overhead
+
+The correct conclusion is not that FastAPI was unnecessary. The correct conclusion is that the free Render instance was too small for the full ML/RAG inference workload.
+
+### 3. Hugging Face Spaces public demo
+
+A Hugging Face Spaces adaptation was created for the public demo:
 
 ```text
-GET /
-GET /health
-POST /analyze-ticket
+Streamlit Space
+→ direct Python function call
+→ src.generate_reply.analyze_ticket_and_generate_reply
+→ saved ML models + intent router + optional RAG
+→ result displayed in Streamlit
 ```
 
-After backend deployment, verify:
+Public demo:
 
 ```text
-https://your-render-api-url.onrender.com/health
-https://your-render-api-url.onrender.com/docs
+https://huggingface.co/spaces/sshivamm/customer-support-copilot
 ```
 
-### Streamlit frontend deployment
-
-The Streamlit app file is:
+Repository files:
 
 ```text
-dashboard/streamlit_app.py
+https://huggingface.co/spaces/sshivamm/customer-support-copilot/tree/main
 ```
 
-The deployed Streamlit app must be configured with this secret:
+This adaptation keeps the core ML/RAG workflow available for demonstration without requiring a separately hosted backend.
 
-```toml
-API_URL = "https://your-render-api-url.onrender.com"
-```
+### Architecture comparison
 
-Locally, the dashboard still defaults to:
+| Concern | Main GitHub repo | Hugging Face Space |
+|---|---|---|
+| Purpose | Full engineering architecture | Public demo |
+| Backend | FastAPI | No separate backend |
+| Frontend | Streamlit dashboard | Streamlit Space |
+| Communication | HTTP request | Direct function call |
+| API contract | Pydantic/FastAPI response schema | Streamlit dictionary rendering |
+| Deployment complexity | Higher | Lower |
+| Reusable API | Yes | No |
+| Production direction | Better foundation | Demo-friendly adaptation |
 
-```text
-http://127.0.0.1:8000
-```
+### Interview-safe deployment explanation
 
-### FAISS vectorstore note
+> I originally built the project with a separate FastAPI backend and Streamlit frontend because that is the cleaner service architecture. I attempted to deploy the backend on Render, but the free instance ran out of memory during the full `/analyze-ticket` ML/RAG route. That route loads several sklearn pipelines, the intent router, sentence-transformer embeddings, FAISS, and policy logic. Instead of removing RAG or weakening the project, I created a Hugging Face Spaces demo where Streamlit directly calls the same core analyzer. So the GitHub repo shows the production-style architecture, while Hugging Face provides the working public demo.
 
-The multilingual FAISS index is small enough for this portfolio deployment.
+### Claims to avoid
 
-Required deployed index:
+Do not claim:
 
-```text
-vectorstore/faiss_policy_index_multilingual/
-├── index.faiss
-└── index.pkl
-```
-
-This folder should be committed so the Render backend can retrieve policies without rebuilding the index during startup.
-
+- Render cannot deploy ML applications.
+- The main GitHub project is fully production deployed.
+- Hugging Face is more production-ready than FastAPI.
+- The Hugging Face version is a separate project.
+- The API boundary was removed because it was unnecessary.
+- A working demo proves production scalability.
 
 ## Current Limitations
 
@@ -1089,44 +1171,50 @@ This folder should be committed so the Render backend can retrieve policies with
 - LLM reply generation is implemented but requires valid API quota/billing.
 - The current RAG policy base is small and manually created.
 - Intent router dataset is small and partially synthetic, so new real failure cases should be added over time.
-- FastAPI is validated locally but not deployed yet.
-- Streamlit dashboard is completed locally, but the frontend/backend are not deployed yet.
-
----
+- RAG evaluation is limited and should be expanded with more multilingual and hard-negative cases.
+- The main FastAPI + Streamlit architecture is validated locally, but the Render free-tier backend deployment was not usable for the full ML/RAG route due to memory limits.
+- The Hugging Face Space is a public-demo adaptation, not a production deployment.
+- The Hugging Face version removes the reusable FastAPI boundary and runs UI plus inference in one process.
+- Production hardening would require authentication, monitoring, structured logging, artifact versioning, drift checks, and load testing.
 
 ## Future Improvements
 
 Planned next modules and upgrades:
 
-- Cloud deployment of FastAPI backend and Streamlit dashboard
-- Larger multilingual policy knowledge base
-- German policy documents
-- Better German sentiment model using German or multilingual sentiment data
-- Improve German queue classification
-- Expand intent router dataset with real failed examples
-- Add RAG relevance thresholding
-- Reduce duplicate policy chunks in API response
-- Optional OpenAI/LLM-powered response generation in production mode
-- Human approval workflow before sending generated replies
-- Model monitoring and feedback loop from support agent corrections
-
----
+- Keep the main GitHub repository as the canonical FastAPI + Streamlit architecture.
+- Keep the Hugging Face Space as the public demo adaptation.
+- Reduce drift between the main GitHub runtime and the Hugging Face runtime by extracting a shared core package.
+- Add deployment smoke tests for one RAG ticket, one non-RAG ticket, one German ticket, and one invalid input.
+- Add artifact health checks for saved models, FAISS files, policy files, and analyzer imports.
+- Add structured logging for intent, confidence, RAG usage, raw-vs-final queue, policy source, review flag, and generation mode.
+- Expand the multilingual policy knowledge base.
+- Add German policy documents.
+- Train or evaluate a stronger German/multilingual sentiment model.
+- Improve German queue classification.
+- Expand the intent router dataset with real failed examples.
+- Add RAG relevance thresholding and hard-negative retrieval tests.
+- Reduce duplicate policy chunks in API responses.
+- Add formal reply-quality tests.
+- Add human approval workflow before sending generated replies.
+- Add model monitoring and a feedback loop from support-agent corrections.
+- For production deployment, use a backend host with enough memory for the full ML/RAG route, such as a paid Render instance, Cloud Run, or another container platform.
 
 ## Next Milestone
 
 ```text
-Phase 10: Deployment
+Phase 11: Hardening and deployment cleanup
 ```
 
 Immediate tasks:
 
 ```text
-1. Commit the small multilingual FAISS index for deployment.
-2. Commit render.yaml, runtime.txt, and the cloud-ready Streamlit API URL handling.
-3. Deploy the FastAPI backend on Render.
-4. Add the Render API URL as API_URL in Streamlit Community Cloud secrets.
-5. Deploy the Streamlit dashboard.
-6. Add the final live URLs to this README.
+1. Keep this GitHub repository as the full architecture reference.
+2. Keep the Hugging Face Space as the public working demo.
+3. Add this deployment story to the README.
+4. Optionally add docs/deployment_story.md for a longer deployment explanation.
+5. Add artifact health checks and smoke tests.
+6. Reduce behavior drift between the GitHub and Hugging Face runtime code.
+7. For production-style hosting, use a backend platform with more than 512 MB memory.
 ```
 
 Local backend command:
@@ -1145,6 +1233,18 @@ Main FastAPI endpoint:
 
 ```text
 POST /analyze-ticket
+```
+
+Hugging Face public demo:
+
+```text
+https://huggingface.co/spaces/sshivamm/customer-support-copilot
+```
+
+Main GitHub repository:
+
+```text
+https://github.com/shivam-singh24/customer-support-copilot
 ```
 
 Example response:
@@ -1173,3 +1273,4 @@ Example response:
   "generated_reply": "Dear Customer..."
 }
 ```
+
